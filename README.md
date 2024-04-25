@@ -30,3 +30,9 @@ The Bookmaker Application is a web application developed using .NET 8 and React.
 
 - API-Football for providing the football-related data API.
 - React and .NET communities for their invaluable resources and support.
+## UI
+![image](https://github.com/Bartolinnni/Bookmaker-Application/assets/128548610/caf5e0a1-2318-4d39-988f-6249637821e9)
+![image](https://github.com/Bartolinnni/Bookmaker-Application/assets/128548610/dd4fc8b2-5520-449a-93fd-49d99ee621d3)
+![image](https://github.com/Bartolinnni/Bookmaker-Application/assets/128548610/c632915f-da26-453e-a070-2e34f0554af8)
+
+
