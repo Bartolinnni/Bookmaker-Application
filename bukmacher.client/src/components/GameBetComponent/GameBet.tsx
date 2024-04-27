@@ -22,7 +22,6 @@ export default function GameBet() {
                 navigate('/individualBetHistory');
             }
             else {
-                // Obsługa błędu
                 console.error('Response error:', response.status);
             }
         }

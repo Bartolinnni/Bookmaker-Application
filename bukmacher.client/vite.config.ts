@@ -66,6 +66,10 @@ export default defineConfig({
                 target: 'http://localhost:5271/IndividualBets',
                 secure: false,
             },
+            '^/GetUserBetsStatistics': {
+                target: 'http://localhost:5271/IndividualBets',
+                secure: false,
+            },
         },
         port: 5173,
         https: {

@@ -109,7 +109,7 @@ export default function Header() {
                             </Transition>
                         </Popover>
 
-                        <a href="#" className="text-2xl font-semibold leading-6 text-white">
+                        <a href="/profile" className="text-2xl font-semibold leading-6 text-white">
                             Profile
                         </a>
                         <a href="/individualBetHistory" className="text-2xl font-semibold leading-6 text-white">
@@ -178,7 +178,7 @@ export default function Header() {
                                         Bets
                                     </a>
                                     <a
-                                        href="#"
+                                        href="/profile"
                                         className="-mx-3 block rounded-lg px-3 py-2 text-2xl font-semibold leading-7 text-white hover:bg-gray-700"
                                     >
                                         Profile

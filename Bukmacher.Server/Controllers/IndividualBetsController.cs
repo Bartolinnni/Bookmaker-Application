@@ -3,6 +3,7 @@ using Bukmacher.Database.Models;
 using Microsoft.AspNetCore.Mvc;
 using Bukmacher.Server.Models.Dto;
 using Bukmacher.Server.Helpers;
+using Bukmacher.Server.Helpers.PointsCounter;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bukmacher.Server.Controllers
@@ -14,11 +15,13 @@ namespace Bukmacher.Server.Controllers
         private readonly ILogger<IndividualBetsController> _logger;
         private readonly DataContext _dataContext;
         private readonly IRefreshGamesScore _refreshGamesScore;
-        public IndividualBetsController(ILogger<IndividualBetsController> logger, DataContext dataContext, IConfiguration configuration, IRefreshGamesScore refreshGamesScore)
+        private readonly IPointsCounter _pointsCounter;
+        public IndividualBetsController(ILogger<IndividualBetsController> logger, DataContext dataContext, IConfiguration configuration, IRefreshGamesScore refreshGamesScore, IPointsCounter pointsCounter)
         {
             _logger = logger;
             _dataContext = dataContext;
             _refreshGamesScore = refreshGamesScore;
+            _pointsCounter = pointsCounter;
         }
 
         [HttpPost]
@@ -59,7 +62,7 @@ namespace Bukmacher.Server.Controllers
                     _dataContext.Teams.Add(awayTeam);
                 }
 
-                await _dataContext.SaveChangesAsync(); // Save the teams first
+                await _dataContext.SaveChangesAsync();
 
                 var game = _dataContext.Matches.FirstOrDefault(m => m.ExternalId == model.Game.GameId);
                 if (game == null)
@@ -70,12 +73,13 @@ namespace Bukmacher.Server.Controllers
                         HomeTeamId = homeTeam.Id,
                         HomeTeam = homeTeam,
                         AwayTeamId = awayTeam.Id,
-                        AwayTeam = awayTeam
+                        AwayTeam = awayTeam,
+                        MatchDate = model.Game.Date
                     };
                     
                     _dataContext.Matches.Add(game);
                 }
-                await _dataContext.SaveChangesAsync(); // Save the match next
+                await _dataContext.SaveChangesAsync();
 
                 var individualBet = new IndividualBet()
                 {
@@ -89,7 +93,6 @@ namespace Bukmacher.Server.Controllers
                 await _dataContext.SaveChangesAsync();
                 
                 return Ok();
-
             }
             catch(Exception ex)
             {
@@ -115,11 +118,13 @@ namespace Bukmacher.Server.Controllers
                     .ToList();
                 
                 var gamesWithResult = bets
-                    .Where(x => x.Match.AwayTeamScore != null)
+                    .Where(x => x.Match.AwayTeamScore != null 
+                                || x.Match.MatchDate >= DateTime.Now)
                     .ToList();
                 
                 var gamesWithNoResult = bets
-                    .Where(x => x.Match.AwayTeamScore == null)
+                    .Where(x => x.Match.AwayTeamScore == null 
+                                && x.Match.MatchDate < DateTime.Now)
                     .ToList();
                 if (gamesWithNoResult.Count != 0)
                 {
@@ -134,13 +139,15 @@ namespace Bukmacher.Server.Controllers
                             game.Match.HomeTeamScore = refreshedGame.goals?.home;
                         }
                     }
-                    
+                
                     _dataContext.UpdateRange(gamesWithNoResult);
                     await _dataContext.SaveChangesAsync();
                 }
                 
                 var refreshedBets = gamesWithResult.Concat(gamesWithNoResult).ToList();
-
+                
+                refreshedBets = await _pointsCounter.RefreshPoints(refreshedBets);
+                
                 var adjustedBets = refreshedBets.Select(
                     bet => new GetUserBet.Root
                     {
@@ -156,6 +163,7 @@ namespace Bukmacher.Server.Controllers
                             HomeTeamScore = bet.Match.HomeTeamScore,
                             AwayTeamScore = bet.Match.AwayTeamScore,
                             Status = bet.Match.Status,
+                            
                             AwayTeam = new GetUserBet.AwayTeam
                             {
                                 Id = bet.Match.AwayTeam.Id,
@@ -174,6 +182,72 @@ namespace Bukmacher.Server.Controllers
                         PredictedAwayTeamScore = bet.PredictedAwayTeamScore,
                         PredictedHomeTeamScore = bet.PredictedHomeTeamScore,
                         Points = bet.Points 
+                    }
+                );
+                    
+                return Ok(adjustedBets);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet]
+        [Route("GetUserBetsStatistics")] 
+        public async Task<IActionResult> GetUserBetsStatistics(string userName)
+        {
+            try
+            {
+                var userId = _dataContext.Users
+                    .Where(x => x.Email == userName)
+                    .Select(x => x.Id)
+                    .FirstOrDefault();
+
+                var bets = _dataContext.IndividualBets
+                    .Include(x => x.Match)
+                    .Include(x => x.Match.AwayTeam)
+                    .Include(x => x.Match.HomeTeam)
+                    .Where(x => x.UserId == userId)
+                    .ToList();
+                
+                var gamesWithResult = bets
+                    .Where(x => x.Match.AwayTeamScore != null 
+                                || x.Match.MatchDate >= DateTime.Now)
+                    .ToList();
+
+                var gamesWithNoResult = bets
+                    .Where(x => x.Match.AwayTeamScore == null
+                                && x.Match.MatchDate < DateTime.Now)
+                    .ToList();
+                if (gamesWithNoResult.Count != 0)
+                {
+                    var refreshedGames = await _refreshGamesScore.DownloadSingleGame(gamesWithNoResult);
+                    
+                    foreach (var game in gamesWithNoResult)
+                    {
+                        var refreshedGame = refreshedGames.FirstOrDefault(x => x.fixture.id == game.Match.ExternalId);
+                        if (refreshedGame != null)
+                        {
+                            game.Match.AwayTeamScore = refreshedGame.goals?.away;
+                            game.Match.HomeTeamScore = refreshedGame.goals?.home;
+                        }
+                    }
+                
+                    _dataContext.UpdateRange(gamesWithNoResult);
+                    await _dataContext.SaveChangesAsync();
+                }
+                
+                var refreshedBets = gamesWithResult.Concat(gamesWithNoResult).ToList();
+                
+                refreshedBets = await _pointsCounter.RefreshPoints(refreshedBets);
+                
+                var adjustedBets = refreshedBets.Select(
+                    bet => new GetBetsStatistics
+                    {
+                        Id = bet.Id,
+                        MatchId = bet.MatchId,
+                        Points = bet.Points,
+                        PointDate = bet.PointDate
                     }
                 );
                     

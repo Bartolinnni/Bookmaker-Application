@@ -6,6 +6,7 @@ import Header from "./components/Header/Header.tsx";
 import MyFooter from "./components/Footer/Footer.tsx";
 import GameBet from "./components/GameBetComponent/GameBet.tsx";
 import IndividualBetHistory from "./components/IndividualBetHistory/IndvidualBetHistory.tsx";
+import Profile from "./components/Profile/Profile.tsx";
 export default function App() {
     return (
             <BrowserRouter>
@@ -16,6 +17,7 @@ export default function App() {
                     <Route path="/userRegister" element={<SignUp />} />
                     <Route path="/gameBet" element={<GameBet />}></Route>
                     <Route path="/individualBetHistory" element={<IndividualBetHistory />}></Route>
+                    <Route path='/profile' element={<Profile />}></Route>
                 </Routes>
                 <MyFooter/>
             </BrowserRouter>

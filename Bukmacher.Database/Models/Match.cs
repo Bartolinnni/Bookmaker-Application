@@ -13,6 +13,7 @@ namespace Bukmacher.Database.Models
         public int? HomeTeamScore { get; set; }
         public int? AwayTeamScore { get; set; }
         public int? Status { get; set; }
+        public DateTime? MatchDate { get; set; }
         public List<IndividualBet> IndividualBetsList { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace Bukmacher.Database.Models
         public Match Match { get; set; }
         public int PredictedHomeTeamScore { get; set; }
         public int PredictedAwayTeamScore { get; set; }
+        public DateTime? PointDate { get; set; }
         public int? Points { get; set; }
     }
 }

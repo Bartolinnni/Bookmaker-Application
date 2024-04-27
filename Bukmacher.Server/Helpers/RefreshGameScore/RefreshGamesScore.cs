@@ -29,20 +29,34 @@ public class RefreshGamesScore : IRefreshGamesScore
     
     public async Task<List<GameResponse.Response>> DownloadSingleGame(List<IndividualBet> bets)
     {
-        var ids = String.Join("-", bets.Select(x => x.Match.ExternalId).ToList());
-        
-        var request = new RestRequest("/v3/fixtures", Method.Get);
-        request.AddParameter("ids", ids);
-        request.AddHeader("X-RapidAPI-Key", ApiToken);
-        request.AddHeader("X-RapidAPI-Host", "api-football-v1.p.rapidapi.com");
-        
-        var response = await _client.ExecuteAsync(request);
-        
-        if (response.StatusCode != HttpStatusCode.OK)
-            return null;
-        await File.WriteAllTextAsync("C:\\Users\\barto_azqkiik\\OneDrive\\Pulpit\\nowePobranie.json", response.ToString());
-        var fixtures = JsonConvert.DeserializeObject<GameResponse.FixtureResponse>(response.Content);
+        try
+        {
+            var settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                MissingMemberHandling = MissingMemberHandling.Ignore
+            };
+            
+            var ids = String.Join("-", bets.Select(x => x.Match.ExternalId).ToList());
 
-        return fixtures.response;
+            var request = new RestRequest("/v3/fixtures", Method.Get);
+            request.AddParameter("ids", ids);
+            request.AddHeader("X-RapidAPI-Key", ApiToken);
+            request.AddHeader("X-RapidAPI-Host", "api-football-v1.p.rapidapi.com");
+
+            var response = await _client.ExecuteAsync(request);
+
+            if (response.StatusCode != HttpStatusCode.OK)
+               return null;
+            
+            var fixtures = JsonConvert.DeserializeObject<GameResponse.FixtureResponse>(response.Content, settings);
+            
+            return fixtures.response;
+        }
+        catch (Exception ex)
+        {
+            var log = ex;
+            return null;
+        }
     }
 }

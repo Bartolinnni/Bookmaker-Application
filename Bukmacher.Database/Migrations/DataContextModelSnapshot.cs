@@ -33,6 +33,9 @@ namespace ClassLibrary1.Migrations
                     b.Property<int>("MatchId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("PointDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("Points")
                         .HasColumnType("int");
 
@@ -75,6 +78,9 @@ namespace ClassLibrary1.Migrations
 
                     b.Property<int?>("HomeTeamScore")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("MatchDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("Status")
                         .HasColumnType("int");

@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Bukmacher.Database;
 using Bukmacher.Server.Helpers;
+using Bukmacher.Server.Helpers.PointsCounter;
+using Bukmacher.Server.Models.API;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddAuthentication(); // Remove AddBearerToken() call here
+builder.Services.AddAuthentication();
 builder.Services.AddAuthorizationBuilder();
 builder.Services.AddDbContext<DataContext>(options =>
 {
@@ -18,12 +20,14 @@ builder.Services.AddDbContext<DataContext>(options =>
 }, ServiceLifetime.Scoped);
 
 builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-    .AddEntityFrameworkStores<DataContext>(); // Add AddBearerToken() here
+    .AddEntityFrameworkStores<DataContext>();
 
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-builder.Services.AddScoped<IRefreshGamesScore, RefreshGamesScore>();
+builder.Services
+    .AddScoped<IRefreshGamesScore, RefreshGamesScore>()
+    .AddScoped<IPointsCounter, PointsCounter>();
 
 var app = builder.Build();
 
