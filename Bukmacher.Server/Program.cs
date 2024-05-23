@@ -1,3 +1,4 @@
+using Bukmacher.Core.FootballApiClient;
 using Microsoft.EntityFrameworkCore;
 using Bukmacher.Database;
 using Bukmacher.Server.Helpers;
@@ -26,8 +27,8 @@ builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 builder.Services
-    .AddScoped<IRefreshGamesScore, RefreshGamesScore>()
-    .AddScoped<IPointsCounter, PointsCounter>();
+    .AddScoped<IPointsCounter, PointsCounter>()
+    .AddScoped<IFootballApiClient, FootballApiClient>();
 
 var app = builder.Build();
 

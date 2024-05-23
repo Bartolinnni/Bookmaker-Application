@@ -1,4 +1,5 @@
-﻿using Bukmacher.Database;
+﻿using Bukmacher.Core.FootballApiClient;
+using Bukmacher.Database;
 using Bukmacher.Database.Models;
 using Microsoft.AspNetCore.Mvc;
 using Bukmacher.Server.Models.Dto;
@@ -14,14 +15,14 @@ namespace Bukmacher.Server.Controllers
     {
         private readonly ILogger<IndividualBetsController> _logger;
         private readonly DataContext _dataContext;
-        private readonly IRefreshGamesScore _refreshGamesScore;
         private readonly IPointsCounter _pointsCounter;
-        public IndividualBetsController(ILogger<IndividualBetsController> logger, DataContext dataContext, IConfiguration configuration, IRefreshGamesScore refreshGamesScore, IPointsCounter pointsCounter)
+        private readonly IFootballApiClient _footballApiClient;
+        public IndividualBetsController(ILogger<IndividualBetsController> logger, DataContext dataContext, IConfiguration configuration, IPointsCounter pointsCounter, IFootballApiClient footballApiClient)
         {
             _logger = logger;
             _dataContext = dataContext;
-            _refreshGamesScore = refreshGamesScore;
             _pointsCounter = pointsCounter;
+            _footballApiClient = footballApiClient;
         }
 
         [HttpPost]
@@ -128,7 +129,8 @@ namespace Bukmacher.Server.Controllers
                     .ToList();
                 if (gamesWithNoResult.Count != 0)
                 {
-                    var refreshedGames = await _refreshGamesScore.DownloadSingleGame(gamesWithNoResult);
+                    var ids = String.Join("-", gamesWithNoResult.Select(x => x.Match.ExternalId).ToList());
+                    var refreshedGames = await _footballApiClient.DownloadGamesByIds(ids);
                     
                     foreach (var game in gamesWithNoResult)
                     {
@@ -221,7 +223,8 @@ namespace Bukmacher.Server.Controllers
                     .ToList();
                 if (gamesWithNoResult.Count != 0)
                 {
-                    var refreshedGames = await _refreshGamesScore.DownloadSingleGame(gamesWithNoResult);
+                    var ids = String.Join("-", gamesWithNoResult.Select(x => x.Match.ExternalId).ToList());
+                    var refreshedGames = await _footballApiClient.DownloadGamesByIds(ids);
                     
                     foreach (var game in gamesWithNoResult)
                     {

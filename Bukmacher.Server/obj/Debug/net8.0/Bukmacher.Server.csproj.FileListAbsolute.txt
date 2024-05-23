@@ -163,3 +163,5 @@ C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Server\bin\Debug\net8
 C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Server\bin\Debug\net8.0\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Server\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Server\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
+C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Server\bin\Debug\net8.0\Bukmacher.Core.dll
+C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Server\bin\Debug\net8.0\Bukmacher.Core.pdb

@@ -33,6 +33,7 @@
     <ProjectReference Include="..\bukmacher.client\bukmacher.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\Bukmacher.Core\Bukmacher.Core.csproj" />
     <ProjectReference Include="..\Bukmacher.Database\Bukmacher.Database.csproj" />
   </ItemGroup>
 

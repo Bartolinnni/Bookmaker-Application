@@ -8,10 +8,11 @@
     ".NETCoreApp,Version=v8.0": {
       "Bukmacher.Server/1.0.0": {
         "dependencies": {
+          "Bukmacher.Core": "1.0.0",
           "Bukmacher.Database": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.3",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "8.0.4",
-          "Microsoft.AspNetCore.SpaProxy": "8.0.4",
+          "Microsoft.AspNetCore.SpaProxy": "8.0.5",
           "Microsoft.EntityFrameworkCore": "9.0.0-preview.2.24128.4",
           "Microsoft.EntityFrameworkCore.SqlServer": "9.0.0-preview.2.24128.4",
           "Microsoft.EntityFrameworkCore.Tools": "9.0.0-preview.2.24128.4",
@@ -122,11 +123,11 @@
           }
         }
       },
-      "Microsoft.AspNetCore.SpaProxy/8.0.4": {
+      "Microsoft.AspNetCore.SpaProxy/8.0.5": {
         "runtime": {
           "lib/net8.0/Microsoft.AspNetCore.SpaProxy.dll": {
-            "assemblyVersion": "8.0.4.0",
-            "fileVersion": "8.0.424.17014"
+            "assemblyVersion": "8.0.5.0",
+            "fileVersion": "8.0.524.22404"
           }
         }
       },
@@ -1042,6 +1043,16 @@
       },
       "System.Threading.Channels/7.0.0": {},
       "System.Threading.Tasks.Extensions/4.5.4": {},
+      "Bukmacher.Core/1.0.0": {
+        "dependencies": {
+          "Bukmacher.Database": "1.0.0",
+          "Newtonsoft.Json": "13.0.3",
+          "RestSharp": "110.2.1-alpha.0.20"
+        },
+        "runtime": {
+          "Bukmacher.Core.dll": {}
+        }
+      },
       "Bukmacher.Database/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.3",
@@ -1117,12 +1128,12 @@
       "path": "microsoft.aspnetcore.mvc.newtonsoftjson/8.0.4",
       "hashPath": "microsoft.aspnetcore.mvc.newtonsoftjson.8.0.4.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.SpaProxy/8.0.4": {
+    "Microsoft.AspNetCore.SpaProxy/8.0.5": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-knuNBv+I6bYjaUHb6KoFEU7CjkKgzwHQWmdcMgUZ8DuLzQQxSS8dd/OacVccaKtTEz5PDFDeIKU8Gg+Pgu+Xvw==",
-      "path": "microsoft.aspnetcore.spaproxy/8.0.4",
-      "hashPath": "microsoft.aspnetcore.spaproxy.8.0.4.nupkg.sha512"
+      "sha512": "sha512-7iEMQelKbwKS5Lk79d/yTOqYSiLPq/wB07Gx4FaFUmF4cv+jtR7vWE55ODaioM+WOHV/ke9HqBCrpfilaaG/Vw==",
+      "path": "microsoft.aspnetcore.spaproxy/8.0.5",
+      "hashPath": "microsoft.aspnetcore.spaproxy.8.0.5.nupkg.sha512"
     },
     "Microsoft.Bcl.AsyncInterfaces/7.0.0": {
       "type": "package",
@@ -1676,6 +1687,11 @@
       "sha512": "sha512-zteT+G8xuGu6mS+mzDzYXbzS7rd3K6Fjb9RiZlYlJPam2/hU7JCBZBVEcywNuR+oZ1ncTvc/cq0faRr3P01OVg==",
       "path": "system.threading.tasks.extensions/4.5.4",
       "hashPath": "system.threading.tasks.extensions.4.5.4.nupkg.sha512"
+    },
+    "Bukmacher.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "Bukmacher.Database/1.0.0": {
       "type": "project",
