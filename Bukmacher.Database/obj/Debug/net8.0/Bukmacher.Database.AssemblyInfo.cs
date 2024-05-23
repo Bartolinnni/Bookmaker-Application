@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Bukmacher.Database")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7cf0949e9d7fb9c5834605e1a936b8c9da4b06ba")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c2d961a1474de2e9fafb3726726c6a3de6604e21")]
 [assembly: System.Reflection.AssemblyProductAttribute("Bukmacher.Database")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Bukmacher.Database")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

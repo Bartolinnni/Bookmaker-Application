@@ -1,14 +1,4 @@
-using System.Data;
-using Bukmacher.Database;
-using Bukmacher.Database.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RestSharp;
-using System.Net.Http;
-using Bukmacher.Server.Models.API;
-using Microsoft.Extensions.Configuration;
-using System.IO;
 using Bukmacher.Core.FootballApiClient;
 
 namespace Bukmacher.Server.Controllers

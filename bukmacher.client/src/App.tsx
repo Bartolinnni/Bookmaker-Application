@@ -7,6 +7,8 @@ import MyFooter from "./components/Footer/Footer.tsx";
 import GameBet from "./components/GameBetComponent/GameBet.tsx";
 import IndividualBetHistory from "./components/IndividualBetHistory/IndvidualBetHistory.tsx";
 import Profile from "./components/Profile/Profile.tsx";
+import UserGroups from './components/UserGroups/UserGroups.tsx';
+import GroupCreation from "./components/GroupCreation/GroupCreation.tsx";
 export default function App() {
     return (
             <BrowserRouter>
@@ -18,6 +20,8 @@ export default function App() {
                     <Route path="/gameBet" element={<GameBet />}></Route>
                     <Route path="/individualBetHistory" element={<IndividualBetHistory />}></Route>
                     <Route path='/profile' element={<Profile />}></Route>
+                    <Route path='/userGroups' element={<UserGroups />}></Route>
+                    <Route path='/groupCreation' element={<GroupCreation />}></Route>
                 </Routes>
                 <MyFooter/>
             </BrowserRouter>

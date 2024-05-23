@@ -70,6 +70,18 @@ export default defineConfig({
                 target: 'http://localhost:5271/IndividualBets',
                 secure: false,
             },
+            '^/GetUserGroups': {
+                target: 'http://localhost:5271/Groups',
+                secure: false,
+            },
+            '^/GetUsers': {
+                target: 'http://localhost:5271/Users',
+                secure: false,
+            },
+            '^/AddGroup': {
+                target: 'http://localhost:5271/Groups',
+                secure: false,
+            },
         },
         port: 5173,
         https: {

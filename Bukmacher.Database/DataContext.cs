@@ -12,6 +12,9 @@ namespace Bukmacher.Database
         public DbSet<Team> Teams { get; set; }
         public DbSet<IndividualBet> IndividualBets { get; set; }
         public DbSet<Match> Matches { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<GroupBet> GroupBets { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,6 +46,27 @@ namespace Bukmacher.Database
 
             modelBuilder.Entity<Team>()
                 .HasKey(t => t.Id);
+
+            modelBuilder.Entity<Group>()
+                .HasKey(g => g.Id);
+
+            modelBuilder.Entity<GroupBet>()
+                .HasKey(gb => gb.Id);
+
+            modelBuilder.Entity<GroupBet>()
+                .HasOne(gb => gb.Group)
+                .WithMany(g => g.GroupBets)
+                .HasForeignKey(gb => gb.GroupId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<GroupBet>()
+                .HasOne(gb => gb.Match)
+                .WithMany()
+                .HasForeignKey(gb => gb.MatchId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Notification>()
+                .HasKey(n => n.Id);
         }
     }
 }

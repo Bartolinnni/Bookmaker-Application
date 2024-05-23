@@ -115,6 +115,9 @@ export default function Header() {
                         <a href="/individualBetHistory" className="text-2xl font-semibold leading-6 text-white">
                             Bets
                         </a>
+                        <a href="/userGroups" className="text-2xl font-semibold leading-6 text-white">
+                            Groups
+                        </a>
                     </Popover.Group>
                     <div className="hidden lg:flex lg:flex-1 lg:justify-end">
                         <a href="/userLogin" className="text-2xl font-semibold leading-6 text-white">
