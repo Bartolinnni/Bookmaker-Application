@@ -1,0 +1,16 @@
+C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Core\bin\Debug\net8.0\Bukmacher.Core.deps.json
+C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Core\bin\Debug\net8.0\Bukmacher.Core.dll
+C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Core\bin\Debug\net8.0\Bukmacher.Core.pdb
+C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Core\bin\Debug\net8.0\Bukmacher.Database.dll
+C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Core\bin\Debug\net8.0\Bukmacher.Database.pdb
+C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Core\obj\Debug\net8.0\Bukmacher.Core.csproj.AssemblyReference.cache
+C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Core\obj\Debug\net8.0\Bukmacher.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Core\obj\Debug\net8.0\Bukmacher.Core.AssemblyInfoInputs.cache
+C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Core\obj\Debug\net8.0\Bukmacher.Core.AssemblyInfo.cs
+C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Core\obj\Debug\net8.0\Bukmacher.Core.csproj.CoreCompileInputs.cache
+C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Core\obj\Debug\net8.0\Bukmacher.Core.sourcelink.json
+C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Core\obj\Debug\net8.0\Bukmacher.Core.csproj.CopyComplete
+C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Core\obj\Debug\net8.0\Bukmacher.Core.dll
+C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Core\obj\Debug\net8.0\refint\Bukmacher.Core.dll
+C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Core\obj\Debug\net8.0\Bukmacher.Core.pdb
+C:\Users\barto_azqkiik\OneDrive\Pulpit\Bukmacher\Bukmacher.Core\obj\Debug\net8.0\ref\Bukmacher.Core.dll
