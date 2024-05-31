@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Bukmacher.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+edbb42321bf54d77a01133ef6cb26a62372657f4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5265cfd5a51118c01ba50c09a547d0d4e9ce6907")]
 [assembly: System.Reflection.AssemblyProductAttribute("Bukmacher.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Bukmacher.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

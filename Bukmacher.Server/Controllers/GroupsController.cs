@@ -29,11 +29,11 @@ namespace Bukmacher.Server.Controllers
             {
                 return BadRequest("");
             }
-            
+
             return Ok(userGroups);
         }
         [HttpPost]
-        [Route("AddGroup")] 
+        [Route("AddGroup")]
         public async Task<IActionResult> AddGroup(AddGroupModel model)
         {
             var ownerId = _dataContext.Users.Where(x => x.UserName == model.OwnerName).Select(x => x.Id).FirstOrDefault();
@@ -60,12 +60,11 @@ namespace Bukmacher.Server.Controllers
                 .Where(x => x.Id == groupId)
                 .FirstOrDefaultAsync();
 
-            
             if (group == null)
             {
                 return BadRequest("");
             }
-            
+
             return Ok(group);
         }
     }

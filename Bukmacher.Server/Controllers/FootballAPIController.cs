@@ -26,14 +26,14 @@ namespace Bukmacher.Server.Controllers
             return Ok(fixtures);
         }
         [HttpGet]
-        [Route("DownloadLiveGames")] 
+        [Route("DownloadLiveGames")]
         public async Task<IActionResult> DownloadLiveGames(string leaugeId)
         {
             var fixtures = await _footballApiClient.DownloadLiveGames(leaugeId);
-            
+
             if (fixtures == null) //|| !response.IsSuccessful
                 return BadRequest("Failed to fetch data from the API.");
-            
+
             return Ok(fixtures);
         }
         [HttpGet]
@@ -41,10 +41,10 @@ namespace Bukmacher.Server.Controllers
         public async Task<IActionResult> DownloadSingleGame(string gameId)
         {
             var fixtures = await _footballApiClient.DownloadLiveGames(gameId);
-            
+
             if (fixtures == null) //|| !response.IsSuccessful
                 return BadRequest("Failed to fetch data from the API.");
-            
+
             return Ok(fixtures);
         }
     }

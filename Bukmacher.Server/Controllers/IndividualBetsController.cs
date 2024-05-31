@@ -36,11 +36,12 @@ namespace Bukmacher.Server.Controllers
                     .Where(x => x.Email == model.userName)
                     .Select(x => x.Id)
                     .FirstOrDefault();
-                
+
                 if (userId == null)
                     return BadRequest("User with this username do not exists");
-                
+
                 var homeTeam = _dataContext.Teams.FirstOrDefault(t => t.ExternalId == model.Game.TeamHomeId);
+
                 if (homeTeam == null)
                 {
                     homeTeam = new Team()
@@ -53,6 +54,7 @@ namespace Bukmacher.Server.Controllers
                 }
 
                 var awayTeam = _dataContext.Teams.FirstOrDefault(t => t.ExternalId == model.Game.TeamAwayId);
+
                 if (awayTeam == null)
                 {
                     awayTeam = new Team()
@@ -67,6 +69,7 @@ namespace Bukmacher.Server.Controllers
                 await _dataContext.SaveChangesAsync();
 
                 var game = _dataContext.Matches.FirstOrDefault(m => m.ExternalId == model.Game.GameId);
+
                 if (game == null)
                 {
                     game = new Match()
@@ -78,9 +81,9 @@ namespace Bukmacher.Server.Controllers
                         AwayTeam = awayTeam,
                         MatchDate = model.Game.Date
                     };
-                    
                     _dataContext.Matches.Add(game);
                 }
+
                 await _dataContext.SaveChangesAsync();
 
                 var individualBet = new IndividualBet()
@@ -93,10 +96,10 @@ namespace Bukmacher.Server.Controllers
 
                 var result = await _dataContext.IndividualBets.AddAsync(individualBet);
                 await _dataContext.SaveChangesAsync();
-                
+
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex);
             }
@@ -118,16 +121,17 @@ namespace Bukmacher.Server.Controllers
                     .Include(x => x.Match.HomeTeam)
                     .Where(x => x.UserId == userId)
                     .ToList();
-                
+
                 var gamesWithResult = bets
                     .Where(x => x.Match.AwayTeamScore != null 
                                 || x.Match.MatchDate >= DateTime.Now)
                     .ToList();
-                
+
                 var gamesWithNoResult = bets
                     .Where(x => x.Match.AwayTeamScore == null 
                                 && x.Match.MatchDate < DateTime.Now)
                     .ToList();
+
                 if (gamesWithNoResult.Count != 0)
                 {
                     var ids = String.Join("-", gamesWithNoResult.Select(x => x.Match.ExternalId).ToList());
@@ -146,11 +150,11 @@ namespace Bukmacher.Server.Controllers
                     _dataContext.UpdateRange(gamesWithNoResult);
                     await _dataContext.SaveChangesAsync();
                 }
-                
+
                 var refreshedBets = gamesWithResult.Concat(gamesWithNoResult).ToList();
-                
+
                 refreshedBets = await _pointsCounter.RefreshPoints(refreshedBets);
-                
+
                 var adjustedBets = refreshedBets.Select(
                     bet => new GetUserBet.Root
                     {
@@ -187,16 +191,16 @@ namespace Bukmacher.Server.Controllers
                         Points = bet.Points 
                     }
                 );
-                    
+
                 return Ok(adjustedBets);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
         [HttpGet]
-        [Route("GetUserBetsStatistics")] 
+        [Route("GetUserBetsStatistics")]
         public async Task<IActionResult> GetUserBetsStatistics(string userName)
         {
             try
@@ -212,7 +216,7 @@ namespace Bukmacher.Server.Controllers
                     .Include(x => x.Match.HomeTeam)
                     .Where(x => x.UserId == userId)
                     .ToList();
-                
+
                 var gamesWithResult = bets
                     .Where(x => x.Match.AwayTeamScore != null 
                                 || x.Match.MatchDate >= DateTime.Now)
@@ -222,6 +226,7 @@ namespace Bukmacher.Server.Controllers
                     .Where(x => x.Match.AwayTeamScore == null
                                 && x.Match.MatchDate < DateTime.Now)
                     .ToList();
+
                 if (gamesWithNoResult.Count != 0)
                 {
                     var ids = String.Join("-", gamesWithNoResult.Select(x => x.Match.ExternalId).ToList());
@@ -230,6 +235,7 @@ namespace Bukmacher.Server.Controllers
                     foreach (var game in gamesWithNoResult)
                     {
                         var refreshedGame = refreshedGames.FirstOrDefault(x => x.fixture.id == game.Match.ExternalId);
+
                         if (refreshedGame != null)
                         {
                             game.Match.AwayTeamScore = refreshedGame.goals?.away;
@@ -240,11 +246,10 @@ namespace Bukmacher.Server.Controllers
                     _dataContext.UpdateRange(gamesWithNoResult);
                     await _dataContext.SaveChangesAsync();
                 }
-                
+
                 var refreshedBets = gamesWithResult.Concat(gamesWithNoResult).ToList();
-                
                 refreshedBets = await _pointsCounter.RefreshPoints(refreshedBets);
-                
+
                 var adjustedBets = refreshedBets.Select(
                     bet => new GetBetsStatistics
                     {
@@ -254,10 +259,10 @@ namespace Bukmacher.Server.Controllers
                         PointDate = bet.PointDate
                     }
                 );
-                    
+
                 return Ok(adjustedBets);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }

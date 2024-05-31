@@ -34,10 +34,10 @@ namespace Bukmacher.Server.Controllers
                     .Where(x => x.Email == model.userName)
                     .Select(x => x.Id)
                     .FirstOrDefault();
-                
+
                 if (userId == null)
                     return BadRequest("User with this username do not exists");
-                
+
                 var homeTeam = _dataContext.Teams.FirstOrDefault(t => t.ExternalId == model.Game.TeamHomeId);
                 if (homeTeam == null)
                 {
@@ -76,7 +76,7 @@ namespace Bukmacher.Server.Controllers
                         AwayTeam = awayTeam,
                         MatchDate = model.Game.Date
                     };
-                    
+
                     _dataContext.Matches.Add(game);
                 }
                 await _dataContext.SaveChangesAsync();
@@ -92,10 +92,10 @@ namespace Bukmacher.Server.Controllers
 
                 await _dataContext.GroupBets.AddRangeAsync(groupBets);
                 await _dataContext.SaveChangesAsync();
-                
+
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex);
             }

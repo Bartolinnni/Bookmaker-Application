@@ -18,7 +18,7 @@ namespace Bukmacher.Server.Controllers
             _dataContext = dataContext;
         }
         [HttpGet]
-        [Route("GetUsers")] 
+        [Route("GetUsers")]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _dataContext.Users.ToListAsync();

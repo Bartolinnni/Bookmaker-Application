@@ -26,13 +26,13 @@ public class PointsCounter : IPointsCounter
                 bet.Points = 2;
             else
                 bet.Points = -2;
-            
+
             bet.PointDate = bet.Match.MatchDate;
             _dataContext.Update(bet);
         }
 
         await _dataContext.SaveChangesAsync();
-        
+
         return bets;
-    } 
+    }
 }

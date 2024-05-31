@@ -5,7 +5,7 @@ namespace Bukmacher.Server.Models.Dto;
 public class Game
 {
     [JsonPropertyName("game_id")]
-    public int GameId { get; set; } 
+    public int GameId { get; set; }
     [JsonPropertyName("team_home_id")]
     public int TeamHomeId { get; set; }
     [JsonPropertyName("team_away_id")]
