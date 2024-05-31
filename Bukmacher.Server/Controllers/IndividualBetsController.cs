@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Bukmacher.Server.Models.Dto;
 using Bukmacher.Server.Helpers;
 using Bukmacher.Server.Helpers.PointsCounter;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bukmacher.Server.Controllers
@@ -27,7 +28,7 @@ namespace Bukmacher.Server.Controllers
 
         [HttpPost]
         [Route("PostIndividualBet")] 
-        public async Task<IActionResult> PostIndividualBet(AddBetModel model)
+        public async Task<IActionResult> PostIndividualBet(AddIndividualBetModel model)
         {
             try
             {

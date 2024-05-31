@@ -3,6 +3,7 @@ using Bukmacher.Core.FootballApiClient;
 using Bukmacher.Database;
 using Bukmacher.Database.Models;
 using Bukmacher.Server.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bukmacher.Server.Controllers
@@ -49,6 +50,23 @@ namespace Bukmacher.Server.Controllers
             await _dataContext.SaveChangesAsync();
 
             return Created(nameof(AddGroup), new { groupId = newGroup.Id });
+        }
+        [HttpGet]
+        [Route("GetUserGroupById")] 
+        public async Task<IActionResult> GetUserGroupById(int groupId)
+        {
+            var group = await _dataContext.Groups
+                .Include(x => x.GroupBets)
+                .Where(x => x.Id == groupId)
+                .FirstOrDefaultAsync();
+
+            
+            if (group == null)
+            {
+                return BadRequest("");
+            }
+            
+            return Ok(group);
         }
     }
 }

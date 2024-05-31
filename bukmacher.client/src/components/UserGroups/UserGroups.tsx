@@ -1,10 +1,13 @@
 ﻿import "./UserGroups.css";
 import { useEffect, useState } from 'react';
 import {Group} from "../../Models/Group.ts";
+import {Game} from "../../Models/Game.ts";
+import { useNavigate } from 'react-router-dom';
 
 export default function UserGroups() {
     const [groups, setGroups] = useState<Group[]>([]);
-
+    const navigate = useNavigate();
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -30,7 +33,9 @@ export default function UserGroups() {
 
         fetchData();
     }, []);
-
+    function redirectToGroupDetails(groupId: Number) {
+        navigate('/groupdetails', { state: { groupId } });
+    }
     return (
         <div className="relative w-full sm:w-3/4 h-4/5 mx-auto flex flex-row">
             <div className="flex-grow overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100">
@@ -41,7 +46,7 @@ export default function UserGroups() {
                         </div>
                     ) : (
                         groups.map((group) => (
-                            <div key={group.id} className="flex justify-center flex-col items-center bg-gray-900 shadow-md rounded-lg sm:h-50 p-4 cursor-pointer border border-violet-600 hover:neon-shadow transition-all duration-300 ease-in-out">
+                            <div key={group.id} className="flex justify-center flex-col items-center bg-gray-900 shadow-md sm:h-28 rounded-lg sm:h-50 p-4 cursor-pointer border border-violet-600 hover:neon-shadow transition-all duration-300 ease-in-out" onClick={() => redirectToGroupDetails(group.id)}>
                                 <h1 className="text-2xl text-white text-center">{group.name}</h1>
                                 <div className="text-xl text-white text-center">{group.description}</div>
                             </div>

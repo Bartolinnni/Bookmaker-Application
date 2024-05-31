@@ -82,6 +82,14 @@ export default defineConfig({
                 target: 'http://localhost:5271/Groups',
                 secure: false,
             },
+            '^/PostGroupBet': {
+                target: 'http://localhost:5271/GroupBets',
+                secure: false,
+            },
+            '^/GetUserGroupById': {
+                target: 'http://localhost:5271/Groups',
+                secure: false,
+            },
         },
         port: 5173,
         https: {

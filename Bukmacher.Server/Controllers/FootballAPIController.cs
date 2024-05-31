@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Bukmacher.Core.FootballApiClient;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bukmacher.Server.Controllers
 {
@@ -14,14 +15,14 @@ namespace Bukmacher.Server.Controllers
         }
 
         [HttpGet]
-        [Route("DownloadFutureGames")] 
+        [Route("DownloadFutureGames")]
         public async Task<IActionResult> DownloadFutureGames(string leaugeId)
         {
             var fixtures = await _footballApiClient.DownloadFutureGames(leaugeId);
-            
+
             if (fixtures == null)
                 return BadRequest("Failed to fetch data from the API.");
-            
+
             return Ok(fixtures);
         }
         [HttpGet]
