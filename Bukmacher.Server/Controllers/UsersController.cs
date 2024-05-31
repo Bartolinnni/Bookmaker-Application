@@ -25,7 +25,7 @@ namespace Bukmacher.Server.Controllers
 
             if (users == null)
             {
-                return BadRequest("");
+                return BadRequest("There was an error during downloading data.");
             }
 
             return Ok(users);
