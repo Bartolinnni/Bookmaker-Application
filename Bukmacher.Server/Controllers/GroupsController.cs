@@ -19,7 +19,7 @@ namespace Bukmacher.Server.Controllers
             _dataContext = dataContext;
         }
         [HttpGet]
-        [Route("GetUserGroups")] 
+        [Route("GetUserGroups")]
         public async Task<IActionResult> GetUserGroups(string userName)
         {
             var userId = _dataContext.Users.Where(x => x.UserName == userName).Select(x => x.Id).FirstOrDefault();
@@ -52,7 +52,7 @@ namespace Bukmacher.Server.Controllers
             return Created(nameof(AddGroup), new { groupId = newGroup.Id });
         }
         [HttpGet]
-        [Route("GetUserGroupById")] 
+        [Route("GetUserGroupById")]
         public async Task<IActionResult> GetUserGroupById(int groupId)
         {
             var group = await _dataContext.Groups

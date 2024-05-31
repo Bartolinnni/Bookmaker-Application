@@ -27,7 +27,7 @@ namespace Bukmacher.Server.Controllers
         }
 
         [HttpPost]
-        [Route("PostIndividualBet")] 
+        [Route("PostIndividualBet")]
         public async Task<IActionResult> PostIndividualBet(AddIndividualBetModel model)
         {
             try
@@ -105,7 +105,7 @@ namespace Bukmacher.Server.Controllers
             }
         }
         [HttpGet]
-        [Route("GetUserBet")] 
+        [Route("GetUserBet")]
         public async Task<IActionResult> GetUserBet(string userName)
         {
             try
@@ -123,12 +123,12 @@ namespace Bukmacher.Server.Controllers
                     .ToList();
 
                 var gamesWithResult = bets
-                    .Where(x => x.Match.AwayTeamScore != null 
+                    .Where(x => x.Match.AwayTeamScore != null
                                 || x.Match.MatchDate >= DateTime.Now)
                     .ToList();
 
                 var gamesWithNoResult = bets
-                    .Where(x => x.Match.AwayTeamScore == null 
+                    .Where(x => x.Match.AwayTeamScore == null
                                 && x.Match.MatchDate < DateTime.Now)
                     .ToList();
 
@@ -136,7 +136,7 @@ namespace Bukmacher.Server.Controllers
                 {
                     var ids = String.Join("-", gamesWithNoResult.Select(x => x.Match.ExternalId).ToList());
                     var refreshedGames = await _footballApiClient.DownloadGamesByIds(ids);
-                    
+
                     foreach (var game in gamesWithNoResult)
                     {
                         var refreshedGame = refreshedGames.FirstOrDefault(x => x.fixture.id == game.Match.ExternalId);
@@ -146,7 +146,7 @@ namespace Bukmacher.Server.Controllers
                             game.Match.HomeTeamScore = refreshedGame.goals?.home;
                         }
                     }
-                
+
                     _dataContext.UpdateRange(gamesWithNoResult);
                     await _dataContext.SaveChangesAsync();
                 }
@@ -170,7 +170,6 @@ namespace Bukmacher.Server.Controllers
                             HomeTeamScore = bet.Match.HomeTeamScore,
                             AwayTeamScore = bet.Match.AwayTeamScore,
                             Status = bet.Match.Status,
-                            
                             AwayTeam = new GetUserBet.AwayTeam
                             {
                                 Id = bet.Match.AwayTeam.Id,
@@ -188,7 +187,7 @@ namespace Bukmacher.Server.Controllers
                         },
                         PredictedAwayTeamScore = bet.PredictedAwayTeamScore,
                         PredictedHomeTeamScore = bet.PredictedHomeTeamScore,
-                        Points = bet.Points 
+                        Points = bet.Points
                     }
                 );
 
@@ -218,7 +217,7 @@ namespace Bukmacher.Server.Controllers
                     .ToList();
 
                 var gamesWithResult = bets
-                    .Where(x => x.Match.AwayTeamScore != null 
+                    .Where(x => x.Match.AwayTeamScore != null
                                 || x.Match.MatchDate >= DateTime.Now)
                     .ToList();
 
@@ -231,7 +230,7 @@ namespace Bukmacher.Server.Controllers
                 {
                     var ids = String.Join("-", gamesWithNoResult.Select(x => x.Match.ExternalId).ToList());
                     var refreshedGames = await _footballApiClient.DownloadGamesByIds(ids);
-                    
+
                     foreach (var game in gamesWithNoResult)
                     {
                         var refreshedGame = refreshedGames.FirstOrDefault(x => x.fixture.id == game.Match.ExternalId);
@@ -242,7 +241,7 @@ namespace Bukmacher.Server.Controllers
                             game.Match.HomeTeamScore = refreshedGame.goals?.home;
                         }
                     }
-                
+
                     _dataContext.UpdateRange(gamesWithNoResult);
                     await _dataContext.SaveChangesAsync();
                 }

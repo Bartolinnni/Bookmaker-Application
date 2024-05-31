@@ -37,7 +37,7 @@ namespace Bukmacher.Server.Controllers
             return Ok(fixtures);
         }
         [HttpGet]
-        [Route("DownloadSingleGame")] 
+        [Route("DownloadSingleGame")]
         public async Task<IActionResult> DownloadSingleGame(string gameId)
         {
             var fixtures = await _footballApiClient.DownloadLiveGames(gameId);
