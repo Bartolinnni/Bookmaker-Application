@@ -114,8 +114,8 @@ export default function GameBet() {
     };
 
     return (
-        <div className="bg-gray-800 mt-8 rounded-2xl sm:shadow-md sm:px-8 sm:pt-6 sm:pb-8 flex sm:mt-12 sm:mb-12 flex-col sm:justify-center w-full h-5/6 sm:w-1/2 sm:h-4/5 mx-auto gap-16">
-            <div className="ml-auto">
+        <div className="bg-gray-800 rounded-2xl w-1/2 gap-5 h-3/4 flex-col justify-center items-center mr-auto ml-auto mt-8">
+            <div className="w-full ml-auto">
                 <ToggleSwitch isOn={isGroupBet} handleToggle={() => setIsGroupBet(!isGroupBet)} />
             </div>
             <div className="mb-4">
@@ -151,7 +151,7 @@ export default function GameBet() {
                 </div>
             </div>
             {isGroupBet && (
-                <div className="mb-6 flex justify-center">
+                <div className="mb-6 mt-5 flex justify-center">
                     <Select
                         id="membersId"
                         isMulti
@@ -164,7 +164,7 @@ export default function GameBet() {
                     />
                 </div>
             )}
-            <div className="flex justify-center">
+            <div className="flex justify-center mt-5">
                 <button
                     className="flex w-1/2 justify-center rounded-md bg-indigo-600 px-24 py-1.5 text-2xl font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     type="submit" onClick={() => PostBet()}>
