@@ -110,13 +110,13 @@ namespace Bukmacher.Server.Controllers
                 .Include(x => x.Match.HomeTeam)
                 .Where(x => x.GroupId == groupId)
                 .ToListAsync();
-            
+
             var userIds = groupBets.Select(bet => bet.UserId).Distinct().ToList();
-            
+
             var userNames = await _dataContext.Users
                 .Where(user => userIds.Contains(user.Id))
                 .ToDictionaryAsync(user => user.Id, user => user.UserName);
-            
+
             var gamesWithResult = groupBets
                 .Where(x => x.Match.AwayTeamScore != null
                             || x.Match.MatchDate >= DateTime.Now)
@@ -149,7 +149,7 @@ namespace Bukmacher.Server.Controllers
             var refreshedBets = gamesWithResult.Concat(gamesWithNoResult).ToList();
 
             refreshedBets = await _pointsCounter.RefreshGroupBetPoints(refreshedBets);
-            
+
             var adjustedBets = refreshedBets.Select(
                 bet => new GetGroupBet.Root
                 {
@@ -188,7 +188,7 @@ namespace Bukmacher.Server.Controllers
                     PointDate = bet.PointDate
                 }
             );
-            
+
             if (adjustedBets == null)
             {
                 return BadRequest("");
