@@ -3,19 +3,18 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ToggleSwitch from '../ToggleSwitch/ToggleSwitch.tsx'; // import the ToggleSwitch component
 import Select from 'react-select';
+import TargetPage from "../TargetPage/TargetPage.tsx";
 
 export default function GameBet() {
     const location = useLocation();
     const game = location.state.game;
     const [homeScore, setHomeScore] = useState(0);
     const [awayScore, setAwayScore] = useState(0);
-    const [isGroupBet, setIsGroupBet] = useState(false); // state to handle the toggle switch
-    const [groupId, setGroupId] = useState(''); // state to handle the group id input
+    const [isGroupBet, setIsGroupBet] = useState(location.state && location.state.isGroupBet !== undefined ? location.state.isGroupBet : false);
+    const groupId = location.state && location.state.groupId !== undefined ? location.state.groupId : null;
     const navigate = useNavigate();
     const [users, setUsers] = useState([]);
     const [selectedMembers, setSelectedMembers] = useState([]);
-    
-    console.log(game);
     
     const customStyles = {
         control: (provided) => ({
@@ -64,8 +63,13 @@ export default function GameBet() {
             .then(data => {
                 const userOptions = data.map(group => ({ value: group.id, label: group.name }));
                 setUsers(userOptions);
+
+                // Find the user group based on the groupId from location state
+                const initialGroup = userOptions.find(group => group.value === groupId);
+                // Set initial selected members to the found group
+                setSelectedMembers(initialGroup ? [initialGroup] : []);
             });
-    }, []);
+    }, [groupId]);
     const PostBet = async () => {
         try {
             if (!isGroupBet) {
@@ -102,7 +106,7 @@ export default function GameBet() {
                 
                 const response = await fetch('PostGroupBet', request);
                 if (response.ok) {
-                    navigate('/individualBetHistory');
+                    navigate('/userGroups');
                 } else {
                     console.error('Response error:', response.status);
                 }
@@ -114,62 +118,66 @@ export default function GameBet() {
     };
 
     return (
-        <div className="bg-gray-800 rounded-2xl w-1/2 gap-5 h-3/4 flex-col justify-center items-center mr-auto ml-auto mt-8">
-            <div className="w-full ml-auto">
-                <ToggleSwitch isOn={isGroupBet} handleToggle={() => setIsGroupBet(!isGroupBet)} />
-            </div>
-            <div className="mb-4">
-                <h2 className="text-5xl font-bold text-center sm:mb-2 text-white">{game.teamHomeName} vs {game.teamAwayName}</h2>
-                <p className="text-white mb-4 text-center text-4xl">{new Date(game.date).toLocaleDateString()}</p>
-            </div>
-            <div className="flex justify-center align-middle">
-                <div className="away_team w-full h-full flex flex-col items-center justify-center">
-                    <img className="h-60 w-60 mb-4" src={game.teamHomeLogo} alt={`${game.teamHomeName} logo`} />
-                    <input
-                        id='home-score'
-                        name='homeScore'
-                        type='number'
-                        min='0'
-                        max='128'
-                        placeholder={game.teamHomeName}
-                        onChange={event => setHomeScore(parseInt(event.target.value))}
-                        className='shadow bg-gray-800 appearance-none border rounded w-1/2 text-white leading-tight focus:outline-none focus:shadow-outline'
-                    />
+        <div className="h-full w-full">
+            <TargetPage></TargetPage>
+            
+            <div className="bg-gray-800 rounded-2xl w-1/2 gap-5 h-3/4 flex-col justify-center items-center mr-auto ml-auto mt-8">
+                <div className="w-full ml-auto">
+                    <ToggleSwitch isOn={isGroupBet} handleToggle={() => setIsGroupBet(!isGroupBet)} />
                 </div>
-                <div className="away_team w-full h-full flex flex-col items-center justify-center">
-                    <img className="h-60 w-60 mb-4" src={game.teamAwayLogo} alt={`${game.teamAwayName} logo`} />
-                    <input
-                        id='away-score'
-                        name='awayScore'
-                        max='128'
-                        type='number'
-                        min='0'
-                        placeholder={game.teamAwayName}
-                        onChange={event => setAwayScore(parseInt(event.target.value))}
-                        className='shadow bg-gray-800 appearance-none border rounded w-1/2 py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline'
-                    />
+                <div className="mb-4">
+                    <h2 className="text-5xl font-bold text-center sm:mb-2 text-white">{game.teamHomeName} vs {game.teamAwayName}</h2>
+                    <p className="text-white mb-4 text-center text-4xl">{new Date(game.date).toLocaleDateString()}</p>
                 </div>
-            </div>
-            {isGroupBet && (
-                <div className="mb-6 mt-5 flex justify-center">
-                    <Select
-                        id="membersId"
-                        isMulti
-                        options={users}
-                        className="text-black w-1/2"
-                        classNamePrefix="select"
-                        styles={customStyles}
-                        onChange={setSelectedMembers}
-                        value={selectedMembers}
-                    />
+                <div className="flex justify-center align-middle">
+                    <div className="away_team w-full h-full flex flex-col items-center justify-center">
+                        <img className="h-30 w-30 mb-4" src={game.teamHomeLogo} alt={`${game.teamHomeName} logo`} />
+                        <input
+                            id='home-score'
+                            name='homeScore'
+                            type='number'
+                            min='0'
+                            max='128'
+                            placeholder={game.teamHomeName}
+                            onChange={event => setHomeScore(parseInt(event.target.value))}
+                            className='shadow bg-gray-800 appearance-none border rounded w-1/2 text-white leading-tight focus:outline-none focus:shadow-outline'
+                        />
+                    </div>
+                    <div className="away_team w-full h-full flex flex-col items-center justify-center">
+                        <img className="h-30 w-30 mb-4" src={game.teamAwayLogo} alt={`${game.teamAwayName} logo`} />
+                        <input
+                            id='away-score'
+                            name='awayScore'
+                            max='128'
+                            type='number'
+                            min='0'
+                            placeholder={game.teamAwayName}
+                            onChange={event => setAwayScore(parseInt(event.target.value))}
+                            className='shadow bg-gray-800 appearance-none border rounded w-1/2 py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline'
+                        />
+                    </div>
                 </div>
-            )}
-            <div className="flex justify-center mt-5">
-                <button
-                    className="flex w-1/2 justify-center rounded-md bg-indigo-600 px-24 py-1.5 text-2xl font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    type="submit" onClick={() => PostBet()}>
-                    Submit Prediction
-                </button>
+                {isGroupBet && (
+                    <div className="mb-6 mt-5 flex justify-center">
+                        <Select
+                            id="membersId"
+                            isMulti
+                            options={users}
+                            className="text-black w-1/2"
+                            classNamePrefix="select"
+                            styles={customStyles}
+                            onChange={setSelectedMembers}
+                            value={selectedMembers}
+                        />
+                    </div>
+                )}
+                <div className="flex justify-center mt-5">
+                    <button
+                        className="flex w-1/2 justify-center rounded-md bg-indigo-600 px-24 py-1.5 text-2xl font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        type="submit" onClick={() => PostBet()}>
+                        Submit Prediction
+                    </button>
+                </div>
             </div>
         </div>
     );

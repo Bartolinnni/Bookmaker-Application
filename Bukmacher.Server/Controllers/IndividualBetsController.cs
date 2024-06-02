@@ -153,7 +153,7 @@ namespace Bukmacher.Server.Controllers
 
                 var refreshedBets = gamesWithResult.Concat(gamesWithNoResult).ToList();
 
-                refreshedBets = await _pointsCounter.RefreshPoints(refreshedBets);
+                refreshedBets = await _pointsCounter.RefreshIndividualBetPoints(refreshedBets);
 
                 var adjustedBets = refreshedBets.Select(
                     bet => new GetUserBet.Root
@@ -247,7 +247,7 @@ namespace Bukmacher.Server.Controllers
                 }
 
                 var refreshedBets = gamesWithResult.Concat(gamesWithNoResult).ToList();
-                refreshedBets = await _pointsCounter.RefreshPoints(refreshedBets);
+                refreshedBets = await _pointsCounter.RefreshIndividualBetPoints(refreshedBets);
 
                 var adjustedBets = refreshedBets.Select(
                     bet => new GetBetsStatistics

@@ -68,23 +68,23 @@ export default function Profile() {
 
     return (
         <div className="flex justify-center w-full mb-4">
-            <div className="h-1/2 w-full gap-2 flex-col justify-center max-w-screen-2xl">
+            <div className="h-4/5 w-2/3 gap-2 flex-col justify-center max-w-screen-2xl">
                 <div className="flex flex-wrap h-1/2 mt-2 gap-2 justify-center">
                     <div
                         className="w-full md:w-1/4 bg-gray-800 rounded-2xl shadow-2xl flex flex-col items-center justify-start cursor-pointer hover:shadow-gray-600 transition-shadow duration-500">
-                        <h3 className="text-white text-center text-3xl font-bold mb-4 mt-4">{sessionStorage.getItem("username")}</h3>
+                        <h3 className="text-white text-center text-xl font-bold mb-4 mt-4">{sessionStorage.getItem("username")}</h3>
                         <img alt="" className="w-1/2 mt-5"
                              src="https://www.chess.com/bundles/web/images/color-icons/coaches.e4e9d916.svg"/>
                     </div>
                     <div
                         className="w-full md:w-1/4 bg-gray-800 rounded-2xl shadow-2xl flex flex-col items-center justify-start cursor-pointer hover:shadow-gray-600 transition-shadow duration-500">
-                        <h3 className="text-white text-center text-3xl font-bold mb-4 mt-4">Points: {points}</h3>
+                        <h3 className="text-white text-center text-xl font-bold mb-4 mt-4">Points: {points}</h3>
                         <img alt="" className="w-1/2 mt-5"
                              src="https://www.chess.com/bundles/web/images/color-icons/tournaments.d5eac419.svg"/>
                     </div>
                     <div
                         className="w-full md:w-1/4 bg-gray-800 rounded-2xl shadow-2xl flex flex-col items-center justify-start cursor-pointer hover:shadow-gray-600 transition-shadow duration-500">
-                        <h3 className="text-white text-center text-4xl font-bold mb-4 mt-4">Bet
+                        <h3 className="text-white text-center text-xl font-bold mb-4 mt-4">Bet
                             games: {gamesPlayed}</h3>
                         <img alt="" className="w-1/2 mt-5"
                              src="https://www.chess.com/bundles/web/images/color-icons/vote.a3f7fcdb.svg"/>

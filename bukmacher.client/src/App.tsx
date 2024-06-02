@@ -10,6 +10,9 @@ import Profile from "./components/Profile/Profile.tsx";
 import UserGroups from './components/UserGroups/UserGroups.tsx';
 import GroupCreation from "./components/GroupCreation/GroupCreation.tsx";
 import GroupDetails from "./components/GroupDetails/GroupDetails.tsx";
+import GroupStatistics from "./components/GroupStatistics/GroupStatistics.tsx";
+import GroupBetHistory from "./components/GroupBetHistory/GroupBetHistory.tsx";
+import GroupGamesToBet from "./components/GroupGamesToBet/GroupGamesToBet.tsx";
 export default function App() {
     return (
             <BrowserRouter>
@@ -24,6 +27,9 @@ export default function App() {
                     <Route path='/userGroups' element={<UserGroups />}></Route>
                     <Route path='/groupCreation' element={<GroupCreation />}></Route>
                     <Route path='/groupdetails' element={<GroupDetails />}></Route>
+                    <Route path='/groupstatistics' element={<GroupStatistics />}></Route>
+                    <Route path='/groupbethistory' element={<GroupBetHistory />}></Route>
+                    <Route path='/groupgamestobet' element={<GroupGamesToBet />}></Route>
                 </Routes>
                 <MyFooter/>
             </BrowserRouter>

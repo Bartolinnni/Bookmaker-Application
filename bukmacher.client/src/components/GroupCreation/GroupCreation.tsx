@@ -1,6 +1,7 @@
 ﻿import { useEffect, useState } from 'react';
 import './GroupCreation.css';
 import Select from 'react-select';
+import TargetPage from "../TargetPage/TargetPage.tsx";
 
 export default function GroupCreation() {
     const [groupName, setGroupName] = useState('');
@@ -99,49 +100,52 @@ export default function GroupCreation() {
     };
 
     return (
-        <div className="max-w-lg mx-auto p-6 bg-gray-800 rounded-lg shadow-lg m-10">
-            <h1 className="text-4xl text-white text-center mb-6">Create a New Group</h1>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-4">
-                    <label htmlFor="groupName" className="block text-white mb-2">Group Name:</label>
-                    <input
-                        type="text"
-                        id="groupName"
-                        className="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded"
-                        value={groupName}
-                        onChange={(e) => setGroupName(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="groupDescription" className="block text-white mb-2">Group Description:</label>
-                    <input
-                        type="text"
-                        id="groupDescription"
-                        className="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded"
-                        value={groupDescription}
-                        onChange={(e) => setGroupDescription(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="mb-6">
-                    <label htmlFor="membersId" className="block text-white mb-2">Members:</label>
-                    <Select
-                        id="membersId"
-                        isMulti
-                        options={users}
-                        className="text-black"
-                        classNamePrefix="select"
-                        styles={customStyles}
-                        onChange={setSelectedMembers}
-                        value={selectedMembers}
-                    />
-                </div>
-                <button type="submit"
-                        className="w-full p-2 bg-indigo-600 text-white font-bold rounded hover:bg-indigo-700 transition">
-                    Create Group
-                </button>
-            </form>
+        <div className="h-4/5 w-full">
+            <TargetPage></TargetPage>
+            <div className="max-w-lg mx-auto p-6 bg-gray-800 rounded-lg shadow-lg m-10">
+                <h1 className="text-4xl text-white text-center mb-6">Create a New Group</h1>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-4">
+                        <label htmlFor="groupName" className="block text-white mb-2">Group Name:</label>
+                        <input
+                            type="text"
+                            id="groupName"
+                            className="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded"
+                            value={groupName}
+                            onChange={(e) => setGroupName(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label htmlFor="groupDescription" className="block text-white mb-2">Group Description:</label>
+                        <input
+                            type="text"
+                            id="groupDescription"
+                            className="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded"
+                            value={groupDescription}
+                            onChange={(e) => setGroupDescription(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="mb-6">
+                        <label htmlFor="membersId" className="block text-white mb-2">Members:</label>
+                        <Select
+                            id="membersId"
+                            isMulti
+                            options={users}
+                            className="text-black"
+                            classNamePrefix="select"
+                            styles={customStyles}
+                            onChange={setSelectedMembers}
+                            value={selectedMembers}
+                        />
+                    </div>
+                    <button type="submit"
+                            className="w-full p-2 bg-indigo-600 text-white font-bold rounded hover:bg-indigo-700 transition">
+                        Create Group
+                    </button>
+                </form>
+            </div>
         </div>
     );
 }

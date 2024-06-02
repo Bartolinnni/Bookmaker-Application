@@ -26,12 +26,11 @@ export default function GamesList(){
                     teamHomeName: game.teams.home.name,
                     teamHomeLogo: game.teams.home.logo
                 }));
-                setGames(newGames); // Update the state with the new games
+                setGames(newGames);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
-
         fetchData();
     }, []);
     

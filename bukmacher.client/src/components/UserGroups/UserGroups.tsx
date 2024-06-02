@@ -1,7 +1,6 @@
 ﻿import "./UserGroups.css";
 import { useEffect, useState } from 'react';
 import {Group} from "../../Models/Group.ts";
-import {Game} from "../../Models/Game.ts";
 import { useNavigate } from 'react-router-dom';
 
 export default function UserGroups() {
