@@ -48,7 +48,7 @@ namespace Bukmacher.Server.Controllers
                 {
                     return BadRequest("You can't bet on the same game in the same group twice.");
                 }
-                
+
                 var homeTeam = _dataContext.Teams.FirstOrDefault(t => t.ExternalId == model.Game.TeamHomeId);
 
                 if (homeTeam == null)
