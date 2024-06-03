@@ -1,21 +1,23 @@
 ﻿import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ToggleSwitch from '../ToggleSwitch/ToggleSwitch.tsx'; // import the ToggleSwitch component
+import ToggleSwitch from '../ToggleSwitch/ToggleSwitch.tsx';
 import Select from 'react-select';
 import TargetPage from "../TargetPage/TargetPage.tsx";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function GameBet() {
     const location = useLocation();
     const game = location.state.game;
-    const [homeScore, setHomeScore] = useState(0);
-    const [awayScore, setAwayScore] = useState(0);
+    const [homeScore, setHomeScore] = useState('');
+    const [awayScore, setAwayScore] = useState('');
     const [isGroupBet, setIsGroupBet] = useState(location.state && location.state.isGroupBet !== undefined ? location.state.isGroupBet : false);
     const groupId = location.state && location.state.groupId !== undefined ? location.state.groupId : null;
     const navigate = useNavigate();
     const [users, setUsers] = useState([]);
     const [selectedMembers, setSelectedMembers] = useState([]);
-    
+
     const customStyles = {
         control: (provided) => ({
             ...provided,
@@ -57,6 +59,7 @@ export default function GameBet() {
             },
         }),
     };
+
     useEffect(() => {
         fetch(`/GetUserGroups?userName=${sessionStorage.getItem("username")}`)
             .then(response => response.json())
@@ -70,24 +73,36 @@ export default function GameBet() {
                 setSelectedMembers(initialGroup ? [initialGroup] : []);
             });
     }, [groupId]);
+
     const PostBet = async () => {
         try {
+            // Validate the scores
+            if (homeScore.trim() === '' || awayScore.trim() === '' || isNaN(parseInt(homeScore)) || isNaN(parseInt(awayScore)) || parseInt(homeScore) < 0 || parseInt(awayScore) < 0) {
+                toast.error("Scores have to be positive numbers.");
+                return;
+            }
+
+            const homeScoreInt = parseInt(homeScore);
+            const awayScoreInt = parseInt(awayScore);
+
             if (!isGroupBet) {
                 const request = {
                     method: 'POST',
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         Game: game,
-                        homeScore: homeScore,
-                        awayScore: awayScore,
+                        homeScore: homeScoreInt,
+                        awayScore: awayScoreInt,
                         userName: sessionStorage.getItem('username'),
                     })
                 };
-                
+
                 const response = await fetch('PostIndividualBet', request);
                 if (response.ok) {
+                    toast.success("Bet posted successfully.");
                     navigate('/individualBetHistory');
                 } else {
+                    toast.error("Failed to post the bet.");
                     console.error('Response error:', response.status);
                 }
             } else {
@@ -97,30 +112,32 @@ export default function GameBet() {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         Game: game,
-                        homeScore: homeScore,
-                        awayScore: awayScore,
+                        homeScore: homeScoreInt,
+                        awayScore: awayScoreInt,
                         userName: sessionStorage.getItem('username'),
                         groupsId: membersArray
                     })
                 };
-                
+
                 const response = await fetch('PostGroupBet', request);
                 if (response.ok) {
+                    toast.success("Group bet posted successfully.");
                     navigate('/userGroups');
                 } else {
+                    toast.error("Failed to post the group bet.");
                     console.error('Response error:', response.status);
                 }
-            };
-        }
-        catch (error) {
+            }
+        } catch (error) {
+            toast.error("An error occurred while posting the bet.");
             console.error('Error fetching data:', error);
         }
     };
 
     return (
         <div className="h-full w-full">
-            <TargetPage></TargetPage>
-            
+            <TargetPage />
+            <ToastContainer />
             <div className="bg-gray-800 rounded-2xl w-1/2 gap-5 h-3/4 flex-col justify-center items-center mr-auto ml-auto mt-8">
                 <div className="w-full ml-auto">
                     <ToggleSwitch isOn={isGroupBet} handleToggle={() => setIsGroupBet(!isGroupBet)} />
@@ -139,7 +156,8 @@ export default function GameBet() {
                             min='0'
                             max='128'
                             placeholder={game.teamHomeName}
-                            onChange={event => setHomeScore(parseInt(event.target.value))}
+                            value={homeScore}
+                            onChange={event => setHomeScore(event.target.value)}
                             className='shadow bg-gray-800 appearance-none border rounded w-1/2 text-white leading-tight focus:outline-none focus:shadow-outline'
                         />
                     </div>
@@ -152,7 +170,8 @@ export default function GameBet() {
                             type='number'
                             min='0'
                             placeholder={game.teamAwayName}
-                            onChange={event => setAwayScore(parseInt(event.target.value))}
+                            value={awayScore}
+                            onChange={event => setAwayScore(event.target.value)}
                             className='shadow bg-gray-800 appearance-none border rounded w-1/2 py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline'
                         />
                     </div>
@@ -174,7 +193,7 @@ export default function GameBet() {
                 <div className="flex justify-center mt-5">
                     <button
                         className="flex w-1/2 justify-center rounded-md bg-indigo-600 px-24 py-1.5 text-2xl font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        type="submit" onClick={() => PostBet()}>
+                        type="submit" onClick={PostBet}>
                         Submit Prediction
                     </button>
                 </div>

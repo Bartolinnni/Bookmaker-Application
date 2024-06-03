@@ -44,7 +44,7 @@ export default function Profile() {
                 const totalPoints = cumulativePointsData[cumulativePointsData.length - 1];
 
                 setPoints(totalPoints);
-                setGamesPlayed(sortedDates.length);
+                setGamesPlayed(Bets.length);
     
                 setChartData({
                     labels: sortedDates,

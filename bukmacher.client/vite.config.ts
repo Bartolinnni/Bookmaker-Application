@@ -97,7 +97,23 @@ export default defineConfig({
             '^/GetGamesToBet': {
                 target: 'http://localhost:5271/GroupBets',
                 secure: false,
-            }
+            },
+            '^/UpdateGroupBet': {
+                target: 'http://localhost:5271/GroupBets',
+                secure: false,
+            },
+            '^/DeleteGroupBet': {
+                target: 'http://localhost:5271/GroupBets',
+                secure: false,
+            },
+            '^/UpdateBet': {
+                target: 'http://localhost:5271/IndividualBets',
+                secure: false,
+            },
+            '^/DeleteBet': {
+                target: 'http://localhost:5271/IndividualBets',
+                secure: false,
+            },
         },
         port: 5173,
         https: {

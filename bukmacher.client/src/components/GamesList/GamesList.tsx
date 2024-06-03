@@ -60,9 +60,4 @@ export default function GamesList(){
             </div>
         </div>
     );
-
-
-
-
-
 }

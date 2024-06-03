@@ -13,6 +13,7 @@ import GroupDetails from "./components/GroupDetails/GroupDetails.tsx";
 import GroupStatistics from "./components/GroupStatistics/GroupStatistics.tsx";
 import GroupBetHistory from "./components/GroupBetHistory/GroupBetHistory.tsx";
 import GroupGamesToBet from "./components/GroupGamesToBet/GroupGamesToBet.tsx";
+import UpdateBet from "./components/UpdateBet/UpdateBet.tsx";
 export default function App() {
     return (
             <BrowserRouter>
@@ -30,6 +31,7 @@ export default function App() {
                     <Route path='/groupstatistics' element={<GroupStatistics />}></Route>
                     <Route path='/groupbethistory' element={<GroupBetHistory />}></Route>
                     <Route path='/groupgamestobet' element={<GroupGamesToBet />}></Route>
+                    <Route path='/updatebet' element={<UpdateBet />}></Route>
                 </Routes>
                 <MyFooter/>
             </BrowserRouter>

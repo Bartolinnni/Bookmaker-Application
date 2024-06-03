@@ -266,5 +266,54 @@ namespace Bukmacher.Server.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPut]
+        [Route("UpdateBet")]
+        public async Task<IActionResult> UpdateBet([FromBody] UpdateBet model)
+        {
+            try
+            {
+                var bet = await _dataContext.IndividualBets.Include(x => x.Match).FirstOrDefaultAsync(x => x.Id == model.Id);
+
+                if (bet == null)//|| bet.Match.HomeTeamScore != null
+                {
+                    return BadRequest("You cannot update this bet.");
+                }
+
+                bet.PredictedAwayTeamScore = model.PredictedAwayTeamScore;
+                bet.PredictedHomeTeamScore = model.PredictedHomeTeamScore;
+
+                _dataContext.IndividualBets.Update(bet);
+                await _dataContext.SaveChangesAsync();
+
+                return Ok("GroupBet updated successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete]
+        [Route("DeleteBet")]
+        public async Task<IActionResult> DeleteBet([FromQuery] int betId)
+        {
+            try
+            {
+                var bet = await _dataContext.IndividualBets.FirstOrDefaultAsync(bet => bet.Id == betId);
+
+                if (bet == null)
+                {
+                    return NotFound("Bet not found.");
+                }
+
+                _dataContext.IndividualBets.Remove(bet);
+                await _dataContext.SaveChangesAsync();
+
+                return Ok("Bet deleted successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
