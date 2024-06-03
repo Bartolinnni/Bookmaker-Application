@@ -15,7 +15,6 @@ export default function UserGroups() {
                     throw new Error('Failed to fetch data');
                 }
                 const data = await response.json();
-                console.log(data);
                 const Groups: Group[] = data.map((group: any) => ({
                     id: group.id,
                     groupBets: group.groupBets,

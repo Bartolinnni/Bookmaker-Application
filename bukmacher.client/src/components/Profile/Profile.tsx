@@ -24,10 +24,10 @@ export default function Profile() {
                     points: statistics.points,
                     dateBet: new Date(statistics.pointDate).toLocaleDateString() // Convert to date string
                 }));
-
-                // Aggregate points for each day
+                const validBets = Bets.filter(bet => bet.points !== null);
+                
                 const aggregatedData: { [key: string]: number } = {};
-                Bets.forEach(bet => {
+                validBets.forEach(bet => {
                     aggregatedData[bet.dateBet] = (aggregatedData[bet.dateBet] || 0) + bet.points;
                 });
 
@@ -44,7 +44,7 @@ export default function Profile() {
                 const totalPoints = cumulativePointsData[cumulativePointsData.length - 1];
 
                 setPoints(totalPoints);
-                setGamesPlayed(Bets.length);
+                setGamesPlayed(validBets.length);
     
                 setChartData({
                     labels: sortedDates,

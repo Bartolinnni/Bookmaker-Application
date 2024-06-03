@@ -21,8 +21,6 @@ export default function GroupStatistics() {
                     throw new Error('Failed to fetch data');
                 }
                 const data = await response.json();
-
-                console.log("Data", data);
                 
                 const Bets: GroupBetStatistics[] = data.map((statistics: any) => ({
                     betId: statistics.id,
@@ -31,16 +29,15 @@ export default function GroupStatistics() {
                     points: statistics.points,
                     pointDate: new Date(statistics.pointDate).toLocaleDateString()
                 }));
-                
-                console.log("Bets", Bets);
+                const validBets = Bets.filter(bet => bet.points !== null);
                 
                 const userPoints: { [username: string]: number } = {};
-                Bets.forEach(bet => {
+                validBets.forEach(bet => {
                     userPoints[bet.username] = (userPoints[bet.username] || 0) + bet.points;
                 });
                 
                 const userDatePoints: { [username: string]: { [date: string]: number } } = {};
-                Bets.forEach(bet => {
+                validBets.forEach(bet => {
                     if (!userDatePoints[bet.username]) {
                         userDatePoints[bet.username] = {};
                     }
@@ -65,7 +62,7 @@ export default function GroupStatistics() {
                     ]
                 });
                 
-                const sortedDates = Array.from(new Set(Bets.map(bet => bet.pointDate))).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+                const sortedDates = Array.from(new Set(validBets.map(bet => bet.pointDate))).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
 
                 const datasets = Object.keys(userDatePoints).map(username => {
                     let cumulativePoints = 0;
@@ -86,9 +83,6 @@ export default function GroupStatistics() {
 
                 setPoints(totalPoints);
                 setGamesPlayed(sortedDates.length);
-                
-                console.log("sorteddates", sortedDates);
-                console.log("datasets", datasets);
                 
                 setChartData({
                     labels: sortedDates,

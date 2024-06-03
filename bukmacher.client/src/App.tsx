@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SignIn from './components/Authentication/SignIn.tsx';
 import SignUp from './components/Authentication/SignUp.tsx';
-import Index from './pages/Index.tsx';
+import GamesList from "./components/GamesList/GamesList.tsx";
 import Header from "./components/Header/Header.tsx";
 import MyFooter from "./components/Footer/Footer.tsx";
 import GameBet from "./components/GameBetComponent/GameBet.tsx";
@@ -19,12 +19,12 @@ export default function App() {
             <BrowserRouter>
                 <Header></Header>
                 <Routes>
-                    <Route path="/" element={< Index />} />
+                    <Route path="/gamelist" element={< GamesList />} />
                     <Route path="/userLogin" element={<SignIn />} />
                     <Route path="/userRegister" element={<SignUp />} />
                     <Route path="/gameBet" element={<GameBet />}></Route>
                     <Route path="/individualBetHistory" element={<IndividualBetHistory />}></Route>
-                    <Route path='/profile' element={<Profile />}></Route>
+                    <Route path='/' element={<Profile />}></Route>
                     <Route path='/userGroups' element={<UserGroups />}></Route>
                     <Route path='/groupCreation' element={<GroupCreation />}></Route>
                     <Route path='/groupdetails' element={<GroupDetails />}></Route>

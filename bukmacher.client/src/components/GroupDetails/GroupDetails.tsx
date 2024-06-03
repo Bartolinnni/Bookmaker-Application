@@ -14,8 +14,6 @@ export default function GroupDetails(){
                     throw new Error('Failed to fetch data');
                 }
                 const data = await response.json();
-                console.log(response)
-                console.log(data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }

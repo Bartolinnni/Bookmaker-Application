@@ -1,9 +1,13 @@
 ﻿import './SignIn.css';
-import { useEffect } from 'react'
+import { useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function SignIn() {
-    useEffect(()=>{
+    useEffect(() => {
         sessionStorage.clear();
-    },[]);
+    }, []);
+
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         // Prevent the browser from reloading the page
         e.preventDefault();
@@ -31,29 +35,28 @@ export default function SignIn() {
                 // Handle response
                 if (response.ok) {
                     response.json().then(data => {
-                        // Save data to session storage
                         sessionStorage.setItem('username', formJson["email"]);
                         sessionStorage.setItem('accessToken', data.accessToken);
                         sessionStorage.setItem('refreshToken', data.refreshToken);
-                        
-                        // Redirect or perform any other actions if needed
+                        toast.success("Successfully signed in!");
                         window.location.href = '/';
                     });
                 } else {
-                    // Handle error response
+                    console.log(response);
+                    toast.error("Failed to sign in. Please check your email and password.");
                 }
             })
             .catch(error => {
                 // Handle fetch error
                 console.error('Error:', error);
+                toast.error("An error occurred. Please try again later.");
             });
     }
 
-
     return (
         <>
-            {}
-            <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-gray-900"> 
+            <ToastContainer />
+            <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-gray-900">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
                         className="mx-auto h-10 w-auto"
@@ -114,11 +117,11 @@ export default function SignIn() {
                     <p className="mt-10 text-center text-sm text-gray-500">
                         Not a member?{' '}
                         <a href="/userRegister" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                            Sign in to your account!
+                            Sign up for an account!
                         </a>
                     </p>
                 </div>
             </div>
         </>
-    )
+    );
 }

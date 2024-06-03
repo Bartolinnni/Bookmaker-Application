@@ -25,8 +25,6 @@ export default function GroupBetHistory() {
                 }
                 const data = await response.json();
 
-                console.log("Data", data);
-
                 const Bets: GroupBetStatistics[] = data.map((bet: any) => ({
                     betId: bet.id,
                     gameId: bet.match.id,
@@ -70,7 +68,6 @@ export default function GroupBetHistory() {
             isGroupBet: true,
             groupName: "Updating group bet."
         }
-        //console.log(updateModel);
         navigate('/updatebet', {state: updateModel});
     };
     function ShowModal(betId:number){
@@ -100,7 +97,7 @@ export default function GroupBetHistory() {
         <div className="w-full h-5/6 mt-5 mb-5">
             <TargetPage />
             <ToastContainer />
-            <div className="w-full sm:w-3/4 h-full overflow-y-scroll mx-auto scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100">
+            <div className="w-full h-5/6 sm:w-3/4  overflow-y-scroll mx-auto scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100">
                 <div className="flex flex-col gap-4 p-4">
                     {bets.map((bet) => (
                         <div key={bet.betId}
@@ -128,7 +125,7 @@ export default function GroupBetHistory() {
                                 <br/>
                                 Actual: {bet.homeTeamScore} - {bet.awayTeamScore}
                             </div>
-                            {bet.username == sessionStorage.getItem("username") && (
+                            {bet.username == sessionStorage.getItem("username") && bet.points === null &&(
                             <div className="flex items-center space-x-4">
                                 <FontAwesomeIcon
                                     icon={faEdit}

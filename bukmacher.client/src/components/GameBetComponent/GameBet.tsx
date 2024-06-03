@@ -124,7 +124,7 @@ export default function GameBet() {
                     toast.success("Group bet posted successfully.");
                     navigate('/userGroups');
                 } else {
-                    toast.error("Failed to post the group bet.");
+                    toast.error("Failed to post the group bet.", response.text());
                     console.error('Response error:', response.status);
                 }
             }

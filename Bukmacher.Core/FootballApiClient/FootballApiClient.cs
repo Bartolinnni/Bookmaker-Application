@@ -36,15 +36,16 @@ public class FootballApiClient : IFootballApiClient
         request.AddHeader("X-RapidAPI-Key", ApiToken);
         request.AddHeader("X-RapidAPI-Host", "api-football-v1.p.rapidapi.com");
 
-        //var response = await _client.ExecuteAsync(request);
+        var response = await _client.ExecuteAsync(request);
+        /*
         var response = await
             System.IO.File.ReadAllTextAsync(
             "C:\\Users\\barto_azqkiik\\OneDrive\\Pulpit\\response_content_from_to.json");
-
-        if (response == null) // || response.StatusCode != HttpStatusCode.OK)
+        */
+        if (response == null || response.StatusCode != HttpStatusCode.OK)
             return null;
 
-        var fixtures = JsonConvert.DeserializeObject<GameResponse.FixtureResponse>(response, settings);
+        var fixtures = JsonConvert.DeserializeObject<GameResponse.FixtureResponse>(response.Content, settings);
 
         return fixtures;
     }
@@ -82,7 +83,7 @@ public class FootballApiClient : IFootballApiClient
         //System.IO.File.ReadAllTextAsync(
         //"C:\\Users\\barto_azqkiik\\OneDrive\\Pulpit\\response_content_from_to.json");
 
-        if (response == null)// || response.StatusCode != HttpStatusCode.OK)
+        if (response == null || response.StatusCode != HttpStatusCode.OK)
             return null;
 
         var fixtures = JsonConvert.DeserializeObject<GameResponse.FixtureResponse>(response.Content, settings);

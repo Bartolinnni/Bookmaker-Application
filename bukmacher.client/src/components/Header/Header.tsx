@@ -8,11 +8,13 @@ import {
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
 const products = [
-    { name: 'La Liga', description: 'Spanish Leauge', href: '#', icon: "https://flagcdn.com/es.svg" },
-    { name: 'Premier Leauge', description: 'English Leauge', href: '#', icon: "https://flagcdn.com/gb-eng.svg" },
-    { name: 'Seria A', description: 'Italian Leauge', href: '#', icon: "https://flagcdn.com/it.svg" },
-    { name: 'Lige 1', description: 'French Leauge', href: '#', icon: "https://flagcdn.com/fr.svg" },
-    { name: 'Ekstraklasa', description: 'Polish Leauge', href: '#', icon: "https://flagcdn.com/pl.svg" },
+    //{ name: 'La Liga', description: 'Spanish Leauge', href: '#', icon: "https://flagcdn.com/es.svg", id: 140 },
+    //{ name: 'Premier Leauge', description: 'English Leauge', href: '#', icon: "https://flagcdn.com/gb-eng.svg", id: 39 },
+    //{ name: 'Seria A', description: 'Italian Leauge', href: '#', icon: "https://flagcdn.com/it.svg", id: 135 },
+    //{ name: 'Lige 1', description: 'French Leauge', href: '#', icon: "https://flagcdn.com/fr.svg", id: 61 },
+    //{ name: 'Ekstraklasa', description: 'Polish Leauge', href: '#', icon: "https://flagcdn.com/pl.svg", id: 106 },
+    { name: 'MLS', description: 'USA Leauge', href: '#', icon: "https://flagcdn.com/us.svg", id: 253 },
+    { name: 'Euro', description: 'European football championship', href: '#', icon: "https://flagcdn.com/eu.svg", id: 4 }
 ]
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -28,20 +30,19 @@ export default function Header() {
         if (location.pathname === '/userLogin' || location.pathname === '/userRegister') {
             showmenuupdateupdate(false);
         } else {
-            console.log(location.pathname);
             showmenuupdateupdate(true);
             let username = sessionStorage.getItem('username');
             if (username === '' || username === null) {
-                console.log(username + "co za gówno");
                 usenavigate('/userLogin');
             } else {
                 displayusernameupdate(username);
-                console.log(username+ "co za gówno jebane");
             }
         }
 
     }, [location])
-
+    function redirectToGameList(id:number){
+        usenavigate('/gamelist', {state: id})
+    }
     return (
         <div>
             {showmenu &&
@@ -86,7 +87,8 @@ export default function Header() {
                                         {products.map((item) => (
                                             <div
                                                 key={item.name}
-                                                className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-700"
+                                                className="group relative flex items-center gap-x-6 rounded-lg p-4 cursor-pointer text-sm leading-6 hover:bg-gray-700"
+                                                onClick={() => redirectToGameList(item.id)}
                                             >
                                                 <div
                                                     className="flex h-11 w-11 flex-none items-center justify-center rounded-lg">
@@ -96,7 +98,7 @@ export default function Header() {
                                                         aria-hidden="true"/>
                                                 </div>
                                                 <div className="flex-auto">
-                                                    <a href={item.href} className="block font-semibold text-white">
+                                                    <a className="block font-semibold text-white">
                                                         {item.name}
                                                         <span className="absolute inset-0"/>
                                                     </a>
@@ -109,7 +111,7 @@ export default function Header() {
                             </Transition>
                         </Popover>
 
-                        <a href="/profile" className="text-2xl font-semibold leading-6 text-white">
+                        <a href="/" className="text-2xl font-semibold leading-6 text-white">
                             Profile
                         </a>
                         <a href="/individualBetHistory" className="text-2xl font-semibold leading-6 text-white">

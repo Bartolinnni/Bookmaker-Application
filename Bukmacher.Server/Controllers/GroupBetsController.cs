@@ -38,6 +38,15 @@ namespace Bukmacher.Server.Controllers
                 if (userId == null)
                     return BadRequest("User with this username do not exists");
 
+                var existingBets = _dataContext.GroupBets
+                    .Where(bet => bet.UserId == userId && bet.Match.ExternalId == model.Game.GameId && model.groupsId.Contains(bet.GroupId))
+                    .ToList();
+
+                if (existingBets.Any())
+                {
+                    return BadRequest("You can't bet on the same game in the same group twice.");
+                }
+
                 var homeTeam = _dataContext.Teams.FirstOrDefault(t => t.ExternalId == model.Game.TeamHomeId);
                 if (homeTeam == null)
                 {
@@ -235,7 +244,7 @@ namespace Bukmacher.Server.Controllers
             {
                 var groupBet = await _dataContext.GroupBets.Include(x => x.Match).FirstOrDefaultAsync(x => x.Id == model.Id);
 
-                if (groupBet == null)//|| groupBet.Match.HomeTeamScore != null
+                if (groupBet == null || groupBet.Match.MatchDate < DateTime.Now)
                 {
                     return BadRequest("You cannot update this bet.");
                 }

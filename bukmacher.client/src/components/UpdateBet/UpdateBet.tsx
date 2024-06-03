@@ -21,7 +21,6 @@ export default function UpdateBet() {
                 toast.error("Scores cannot be negative.");
                 return;
             }
-            console.log(homeScore);
             if(isGroupBet)
             {
                 const request = {

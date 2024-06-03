@@ -91,7 +91,6 @@ export default function GroupCreation() {
                 return response.json();
             })
             .then(data => {
-                console.log('Group created successfully:', data);
                 window.location.href = '/userGroups';
             })
             .catch(error => {

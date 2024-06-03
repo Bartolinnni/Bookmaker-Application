@@ -1,16 +1,16 @@
 ﻿import "./GamesList.css";
 import {Game} from '../../Models/Game.ts'
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function GamesList(){
     const [games, setGames] = useState<Game[]>([]); // State to hold the games array
     const navigate = useNavigate(); // Moved useNavigate here
-    
+    const location = useLocation();
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const leagueId = 39;
+                const leagueId = location.state;
                 const response = await fetch(`/DownloadFutureGames?leaugeId=${leagueId}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
@@ -33,10 +33,6 @@ export default function GamesList(){
         };
         fetchData();
     }, []);
-    
-    useEffect(() => {
-        console.log(games);
-    }, [games]);
 
     function redirectToGameBet(game: Game) {
         navigate('/gamebet', { state: { game } });

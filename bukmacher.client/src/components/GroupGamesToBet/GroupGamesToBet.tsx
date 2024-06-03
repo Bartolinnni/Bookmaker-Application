@@ -34,11 +34,7 @@ export default function GroupGamesToBet() {
         };
         fetchData();
     }, []);
-
-    useEffect(() => {
-        console.log(games);
-    }, [games]);
-
+    
     function redirectToGameBet(game: Game) {
         const isGroupBet = true; 
         navigate('/gamebet', { state: { game, isGroupBet, groupId } });

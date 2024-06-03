@@ -23,7 +23,6 @@ export default function IndividualBetHistory() {
                     throw new Error('Failed to fetch data');
                 }
                 const data = await response.json();
-                console.log(data);
                 const Bets: Bet[] = data.map((bet: any) => ({
                     betId: bet.id,
                     gameId: bet.match.id,
@@ -111,30 +110,36 @@ export default function IndividualBetHistory() {
                             <span className="hidden sm:inline-block font-semibold text-4xl text-white">{bet.teamAwayName}</span>
                         </div>
                         <div className="text-2xl text-gray-400">
-                            <br />
+                            <br/>
                             Predicted: {bet.predictedHomeTeamScore} - {bet.predictedAwayTeamScore}
-                            <br />
+                            <br/>
                             Actual: {bet.homeTeamScore} - {bet.awayTeamScore}
-                            <br />
-                            <FontAwesomeIcon
-                                icon={faEdit}
-                                className="text-white mr-5 cursor-pointer transition duration-300 ease-in-out transform hover:scale-110"
-                                onClick={() => handleEdit(bet)}
-                            />
-                            <FontAwesomeIcon
-                                icon={faTrash}
-                                className="text-white cursor-pointer transition duration-300 ease-in-out transform hover:scale-110"
-                                onClick={() => showModal(bet.betId)}
-                            />
+                            <br/>
+                            {bet.points == null && (
+                                <>
+                                    <FontAwesomeIcon
+                                        icon={faEdit}
+                                        className="text-white mr-5 cursor-pointer transition duration-300 ease-in-out transform hover:scale-110"
+                                        onClick={() => handleEdit(bet)}
+                                    />
+                                    <FontAwesomeIcon
+                                        icon={faTrash}
+                                        className="text-white cursor-pointer transition duration-300 ease-in-out transform hover:scale-110"
+                                        onClick={() => showModal(bet.betId)}
+                                    />
+                                </>
+                            )}
                         </div>
+
                     </div>
                 ))}
             </div>
             <Modal className="w-80 h-80 mx-auto" show={openModal} size="md" onClose={() => setOpenModal(false)}>
-                <Modal.Header />
+                <Modal.Header/>
                 <Modal.Body id="deleteModalBody">
                     <div className="text-center">
-                        <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                        <HiOutlineExclamationCircle
+                            className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200"/>
                         <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                             Are you sure you want to delete this bet?
                         </h3>
