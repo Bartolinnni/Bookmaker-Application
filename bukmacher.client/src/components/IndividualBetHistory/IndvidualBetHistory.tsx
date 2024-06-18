@@ -47,7 +47,7 @@ export default function IndividualBetHistory() {
         fetchData();
     }, []);
 
-    const handleEdit = (bet) => {
+    const handleEdit = (bet : Bet) => {
         const updateModel = {
             game: {
                 gameId: bet.gameId,

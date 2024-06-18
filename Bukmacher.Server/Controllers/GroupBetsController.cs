@@ -47,6 +47,11 @@ namespace Bukmacher.Server.Controllers
                     return BadRequest("You can't bet on the same game in the same group twice.");
                 }
 
+                if (model.Game.Date < DateTime.Now)
+                {
+                    return BadRequest("You can't bet on this game.");
+                }
+
                 var homeTeam = _dataContext.Teams.FirstOrDefault(t => t.ExternalId == model.Game.TeamHomeId);
                 if (homeTeam == null)
                 {
@@ -219,7 +224,7 @@ namespace Bukmacher.Server.Controllers
                 .Include(x => x.Match)
                 .Include(x => x.Match.AwayTeam)
                 .Include(x => x.Match.HomeTeam)
-                .Where(x => x.GroupId == groupId)
+                .Where(x => x.GroupId == groupId && x.Match.MatchDate > DateTime.Now)
                 .ToListAsync();
 
             var userBets = await _dataContext.GroupBets

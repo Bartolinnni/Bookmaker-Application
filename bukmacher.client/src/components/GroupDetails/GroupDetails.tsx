@@ -1,26 +1,9 @@
-﻿import { useEffect} from 'react';
-import { useLocation, useNavigate } from "react-router-dom";
+﻿import { useLocation, useNavigate } from "react-router-dom";
 import TargetPage from "../TargetPage/TargetPage.tsx";
 export default function GroupDetails(){
     const location = useLocation();
     const groupId = location.state.groupId;
     const navigate = useNavigate();
-    
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`/GetUserGroupById?groupId=${groupId}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const data = await response.json();
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
 
     function groupStatistics(){
         navigate('/groupstatistics', { state: { groupId } });

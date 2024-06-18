@@ -6,8 +6,6 @@ import { GroupBetStatistics } from "../../Models/GroupBetStatistics.ts";
 import TargetPage from "../TargetPage/TargetPage.tsx";
 
 export default function GroupStatistics() {
-    const [gamesPlayed, setGamesPlayed] = useState<number>(0);
-    const [points, setPoints] = useState<number>(0);
     const [chartData, setChartData] = useState<any>(null);
     const [barChartData, setBarChartData] = useState<any>(null);
     const location = useLocation();
@@ -78,11 +76,6 @@ export default function GroupStatistics() {
                         borderWidth: 2
                     };
                 });
-
-                const totalPoints = Object.values(userPoints).reduce((acc, points) => acc + points, 0);
-
-                setPoints(totalPoints);
-                setGamesPlayed(sortedDates.length);
                 
                 setChartData({
                     labels: sortedDates,

@@ -2,6 +2,8 @@
 import './GroupCreation.css';
 import Select from 'react-select';
 import TargetPage from "../TargetPage/TargetPage.tsx";
+import { CSSObject } from '@emotion/react';
+import { GroupBase, StylesConfig } from 'react-select';
 
 export default function GroupCreation() {
     const [groupName, setGroupName] = useState('');
@@ -9,8 +11,8 @@ export default function GroupCreation() {
     const [selectedMembers, setSelectedMembers] = useState([]);
     const [users, setUsers] = useState([]);
 
-    const customStyles = {
-        control: (provided) => ({
+    const customStyles: StylesConfig<YourOptionType, IsMultiType, GroupBase<YourOptionType>> = {
+        control: (provided: CSSObject) => ({
             ...provided,
             backgroundColor: '#374151',
             color: '#FFFFFF',
@@ -18,30 +20,30 @@ export default function GroupCreation() {
             padding: '0.5rem',
             borderRadius: '0.25rem',
         }),
-        input: (provided) => ({
+        input: (provided: CSSObject) => ({
             ...provided,
             color: '#FFFFFF',
         }),
-        menu: (provided) => ({
+        menu: (provided: CSSObject) => ({
             ...provided,
             backgroundColor: '#374151',
             color: '#FFFFFF',
         }),
-        option: (provided, state) => ({
+        option: (provided: CSSObject, state) => ({
             ...provided,
             backgroundColor: state.isSelected ? '#2563EB' : state.isFocused ? '#1a202c' : '#374151',
             color: state.isSelected || state.isFocused ? '#FFFFFF' : '#D1D5DB',
         }),
-        multiValue: (provided) => ({
+        multiValue: (provided: CSSObject) => ({
             ...provided,
             backgroundColor: '#4B5563',
             color: '#FFFFFF',
         }),
-        multiValueLabel: (provided) => ({
+        multiValueLabel: (provided: CSSObject) => ({
             ...provided,
             color: '#FFFFFF',
         }),
-        multiValueRemove: (provided) => ({
+        multiValueRemove: (provided: CSSObject) => ({
             ...provided,
             color: '#FFFFFF',
             ':hover': {

@@ -6,6 +6,8 @@ import Select from 'react-select';
 import TargetPage from "../TargetPage/TargetPage.tsx";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { CSSObject } from '@emotion/react';
+import { GroupBase, StylesConfig } from 'react-select';
 
 export default function GameBet() {
     const location = useLocation();
@@ -18,8 +20,9 @@ export default function GameBet() {
     const [users, setUsers] = useState([]);
     const [selectedMembers, setSelectedMembers] = useState([]);
 
-    const customStyles = {
-        control: (provided) => ({
+
+    const customStyles: StylesConfig<YourOptionType, IsMultiType, GroupBase<YourOptionType>> = {
+        control: (provided: CSSObject) => ({
             ...provided,
             backgroundColor: '#374151',
             color: '#FFFFFF',
@@ -27,30 +30,30 @@ export default function GameBet() {
             padding: '0.5rem',
             borderRadius: '0.25rem',
         }),
-        input: (provided) => ({
+        input: (provided: CSSObject) => ({
             ...provided,
             color: '#FFFFFF',
         }),
-        menu: (provided) => ({
+        menu: (provided: CSSObject) => ({
             ...provided,
             backgroundColor: '#374151',
             color: '#FFFFFF',
         }),
-        option: (provided, state) => ({
+        option: (provided: CSSObject, state) => ({
             ...provided,
             backgroundColor: state.isSelected ? '#2563EB' : state.isFocused ? '#1a202c' : '#374151',
             color: state.isSelected || state.isFocused ? '#FFFFFF' : '#D1D5DB',
         }),
-        multiValue: (provided) => ({
+        multiValue: (provided: CSSObject) => ({
             ...provided,
             backgroundColor: '#4B5563',
             color: '#FFFFFF',
         }),
-        multiValueLabel: (provided) => ({
+        multiValueLabel: (provided: CSSObject) => ({
             ...provided,
             color: '#FFFFFF',
         }),
-        multiValueRemove: (provided) => ({
+        multiValueRemove: (provided: CSSObject) => ({
             ...provided,
             color: '#FFFFFF',
             ':hover': {
@@ -66,10 +69,7 @@ export default function GameBet() {
             .then(data => {
                 const userOptions = data.map(group => ({ value: group.id, label: group.name }));
                 setUsers(userOptions);
-
-                // Find the user group based on the groupId from location state
                 const initialGroup = userOptions.find(group => group.value === groupId);
-                // Set initial selected members to the found group
                 setSelectedMembers(initialGroup ? [initialGroup] : []);
             });
     }, [groupId]);

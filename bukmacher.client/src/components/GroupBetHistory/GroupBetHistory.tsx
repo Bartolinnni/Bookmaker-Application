@@ -51,7 +51,7 @@ export default function GroupBetHistory() {
         fetchData();
     }, [groupId]);
 
-    const handleEdit = (bet) => {
+    const handleEdit = (bet : GroupBetStatistics) => {
         const updateModel = {
             game: {
                 gameId: bet.gameId,

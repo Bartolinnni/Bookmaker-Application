@@ -13,8 +13,9 @@ const products = [
     //{ name: 'Seria A', description: 'Italian Leauge', href: '#', icon: "https://flagcdn.com/it.svg", id: 135 },
     //{ name: 'Lige 1', description: 'French Leauge', href: '#', icon: "https://flagcdn.com/fr.svg", id: 61 },
     //{ name: 'Ekstraklasa', description: 'Polish Leauge', href: '#', icon: "https://flagcdn.com/pl.svg", id: 106 },
-    { name: 'MLS', description: 'USA Leauge', href: '#', icon: "https://flagcdn.com/us.svg", id: 253 },
-    { name: 'Euro', description: 'European football championship', href: '#', icon: "https://flagcdn.com/eu.svg", id: 4 }
+    { name: 'MLS', description: 'USA Leauge', href: '#', icon: "https://media.api-sports.io/football/leagues/253.png", id: 253 },
+    //{ name: 'Euro', description: 'European football championship', href: '#', icon: "https://flagcdn.com/eu.svg", id: 4 },
+    { name: 'Seria A', description: 'Brasil Leauge', href: '#', icon: "https://media.api-sports.io/football/leagues/71.png", id: 71 }
 ]
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')

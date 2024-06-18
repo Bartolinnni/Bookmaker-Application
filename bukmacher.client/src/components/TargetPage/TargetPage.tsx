@@ -7,10 +7,10 @@ export default function TargetPage() {
     const navigate = useNavigate();
     const stateData = location.state;
 
-    console.log(stateData); // Access your passed state data here
+    console.log(stateData);
 
     function goBack() {
-        navigate(-1); // Navigate back to the previous page
+        navigate(-1);
     }
 
     return (

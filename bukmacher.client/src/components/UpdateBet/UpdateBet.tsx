@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TargetPage from "../TargetPage/TargetPage.tsx";
 import { ToastContainer, toast } from 'react-toastify';

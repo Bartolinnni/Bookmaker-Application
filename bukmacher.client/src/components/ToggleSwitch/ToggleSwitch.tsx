@@ -1,9 +1,14 @@
-﻿import React from 'react';
+﻿import {FC, ChangeEventHandler } from 'react';
 
-const ToggleSwitch = ({ isOn, handleToggle }) => {
+interface ToggleSwitchProps {
+    isOn: boolean;
+    handleToggle: ChangeEventHandler<HTMLInputElement>;
+}
+
+const ToggleSwitch: FC<ToggleSwitchProps> = ({ isOn, handleToggle }) => {
     return (
         <div className="flex items-center justify-center w-full mb-4">
-            <p className="text-2xl text-white mr-3">Group Betting  </p>
+            <p className="text-2xl text-white mr-3">Group Betting</p>
             <label className="relative inline-flex items-center cursor-pointer">
                 <input
                     type="checkbox"
@@ -16,4 +21,5 @@ const ToggleSwitch = ({ isOn, handleToggle }) => {
         </div>
     );
 };
+
 export default ToggleSwitch;
